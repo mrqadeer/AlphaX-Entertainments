@@ -28,3 +28,67 @@ h1 {
     color: #FFFFFF !important;  /* White icons */
 }
 
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffe814;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.poster {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    border-radius: 15px;
+}
+.details {
+    font-size: 20px;
+    color: #1fed04;
+    margin: 15px 0;
+}
+.details span {
+    font-weight: bold;
+    color: #e17202;
+}
+.imdb-link {
+    color: #F5C518;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+/* for recommendations */
+
+.recommendations-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffe814;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.recommendation-item {
+    text-align: center;
+    margin-top: 15px;
+}
+.recommendation-item img {
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+}
+.recommendation-caption {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4bf900;
+    margin-top: 10px;
+}
+
+
+.recommendation-item a {
+    text-decoration: none;
+    color: #05ef63;
+}
+.recommendation-item a:hover {
+    color: #f1ee08;  /* Color on hover */
+}
