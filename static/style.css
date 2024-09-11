@@ -1,0 +1,30 @@
+/* static/style.css */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #2b2d3b; /* Matches config.toml background */
+}
+
+.sidebar .sidebar-content {
+    background-color: #333333 !important;  /* Darker background for sidebar */
+    color: #FFFFFF !important;  /* White text in sidebar */
+}
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+    color: #4CAF50;  /* Matching primary color */
+}
+
+.sidebar .nav-link:hover {
+    background-color: #4CAF50 !important;  /* Highlight on hover */
+    color: #FFFFFF !important;  /* White text on hover */
+}
+
+.nav-link-active {
+    background-color: #4CAF50 !important;  /* Active link */
+    color: #FFFFFF !important;
+}
+
+.icon {
+    color: #FFFFFF !important;  /* White icons */
+}
+
