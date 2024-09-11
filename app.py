@@ -5,7 +5,11 @@ from PIL import Image
 from io import BytesIO
 from streamlit_option_menu import option_menu
 
-from components.input_components import credentials,text_prompt
+from components.input_components import (get_credentials,
+                                         get_choice,
+                                         get_text_prompt,
+                                         get_image_prompt
+                                         )
 from src.api_handlers import get_llm_response
 
 from components.display_components import display_recongnition_result,display_recommendation_result
@@ -45,7 +49,7 @@ def main():
         )
         
     if selected == "Home":
-        if credentials():
+        if get_credentials():
             st.session_state['credential_flag'] = True
             
     elif selected == "About":
@@ -54,14 +58,12 @@ def main():
             st.stop()
         
         st.subheader(f"{st.session_state['username'].title()} Welcome to AlphaX Entertainments")
-        st.divider()
-        # make 5 radio button options (text,image,audio,video,recording)
-    
-        choice=st.radio("Select an option", ("Text", "Image", "Audio", "Video", "Recording"), horizontal=True)
-        if choice=="Text":
-            dialogue=text_prompt()
-            # st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+        st.markdown("<div class='rainbow-divider'></div>", unsafe_allow_html=True)
+        choice=get_choice()
         
+        # st.markdown("<div class='rainbow-divider'></div>", unsafe_allow_html=True)
+        if choice=="Text":
+            dialogue=get_text_prompt()
             submit=st.button("Submit")
             if len(dialogue)>0 and submit:
                
@@ -72,7 +74,23 @@ def main():
                     display_recongnition_result(data)
                     display_recommendation_result(data)
                     # Display recommendations in a 2x5 grid
-                    
+        elif choice=="Image":
+            # st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+            prompt_image,tag=get_image_prompt()
+            
+            if tag=='url':
+                
+        elif choice=="Audio":
+            st.file_uploader("Upload an audio", type=["mp3", "wav"])
+            ...
+        elif choice=="Video":
+            st.file_uploader("Upload a video", type=["mp4", "mov"])
+            ...
+        elif choice=="Recording":
+            st.file_uploader("Upload a recording", type=["mp3", "wav", "mp4", "mov"])
+            ...
+        else:
+            st.write("Please select a valid option")
 
 
 if __name__ == "__main__":

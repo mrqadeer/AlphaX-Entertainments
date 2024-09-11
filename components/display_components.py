@@ -31,19 +31,6 @@ def display_recommendation_result(data):
 
         cols = st.columns(5)
         for i, rec in enumerate(data["recommendations"]):
-            # with cols[i % 5]:
-            #     title, imdb_url = list(rec.items())[0]
-            #     with st.container():
-            #         # Display the clickable title with the IMDb URL
-            #         st.markdown(f"""
-            #             <div class='recommendation-item'>
-            #                 <img src="{image}">
-            #                 <div class='recommendation-caption'>
-            #                     <a href="{imdb_url}" target="_blank">{title}</a>
-            #                 </div>
-            #             </div>
-            #         """, unsafe_allow_html=True)
-                # for i, rec in enumerate(data["recommendations"]):
             with cols[i % 5]:
                 title, imdb_url = list(rec.items())[0]
                 with st.container():
