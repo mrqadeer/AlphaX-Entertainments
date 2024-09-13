@@ -8,7 +8,8 @@ from streamlit_option_menu import option_menu
 from components.input_components import (get_credentials,
                                          get_choice,
                                          get_text_prompt,
-                                         get_image_prompt
+                                         get_image_prompt,
+                                         get_audio_prompt
                                          )
 from src.api_handlers import get_llm_response
 
@@ -34,7 +35,7 @@ def main():
     with st.sidebar:
         selected = option_menu(
             menu_title='Menu',
-            options=["Home", "About"],
+            options=["Home", "Try Now AlphaX"],
             icons=["house", "book"],
             menu_icon="cast",
             default_index=0,
@@ -53,7 +54,7 @@ def main():
         if get_credentials():
             st.session_state['credential_flag'] = True
             
-    elif selected == "About":
+    elif selected == "Try Now AlphaX":
         if not st.session_state['credential_flag']:
             st.subheader("Please enter your credentials to access AlphaX Entertainments")
             st.stop()
@@ -120,8 +121,10 @@ def main():
                     st.error(f"An error occurred: {e}")
 
         elif choice=="Audio":
-            st.file_uploader("Upload an audio", type=["mp3", "wav"])
-            ...
+            audio_prompt,tag=get_audio_prompt()
+            if tag=='recording':
+                audio_text=audio_prompt
+                st.write(audio_text)
         elif choice=="Video":
             st.file_uploader("Upload a video", type=["mp4", "mov"])
             ...

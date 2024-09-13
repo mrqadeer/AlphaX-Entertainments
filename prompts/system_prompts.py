@@ -472,6 +472,10 @@ The final output should follow this **JSON structure**:
         {"Title of Sequel or Similar Media 3": "Original IMDb URL"}
     ]
 }```
+### Things to Keep In Mind
+- Ensure the recommendations are relevant to the media identified.
+- The IMDB URL is correct and to be the respected media.
+- Recommendations are based on the genre, cast, or other relevant features of the identified media.
 ### Note: Return the proper JSON structure only with proper keys and values.
 ### What to Avoid:
 - Do not provide incomplete or incorrect media details.

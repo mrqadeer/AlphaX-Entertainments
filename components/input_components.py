@@ -1,4 +1,8 @@
 import streamlit as st
+from streamlit_mic_recorder import speech_to_text
+import time
+
+
 if 'username' not in st.session_state:
     st.session_state['username'] = 'Qadeer'
 def get_credentials():
@@ -55,6 +59,7 @@ def get_image_prompt():
         
         # Rainbow divider (assuming the CSS is defined somewhere)
         st.markdown("<div class='rainbow-divider'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='choice'>Choose an option to get started</div>", unsafe_allow_html=True)
         cols=st.columns([2,2.5,2,2,2])
         with cols[2]:
             choice=st.radio("Select an option", ("URL", "Upload"), horizontal=True)
@@ -71,3 +76,47 @@ def get_image_prompt():
             else:
                 return '','error'
   
+def get_audio_prompt():
+    with st.expander("Audio:", expanded=True):
+        st.subheader("Enter audio URL or Upload an audio")
+        
+        st.markdown("<div class='rainbow-divider'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='choice'>Choose an option to get started</div>", unsafe_allow_html=True)
+        cols=st.columns([2,2.5,2,2,2])
+        with cols[2]:
+            choice=st.radio("Select an option", ("Record", "Upload"), horizontal=True)
+        if choice=="Record":
+            with cols[2]:
+                with st.progress(0, text="Recording..."):
+                    recorded_text = speech_to_text(
+                        language='en',
+                        start_prompt="🎙️ Start Recording",
+                        stop_prompt="🛑 Stop Recording",
+                        just_once=False,
+                        use_container_width=False,
+                        callback=None,
+                        args=(),
+                        kwargs={},
+                        key=None
+                    )
+                   
+            if recorded_text:
+                progress_text = "Getting your dialogue. Please wait."
+                my_bar = st.progress(0, text=progress_text)
+               
+                # Simulate the progress of fetching the dialogue
+                for percent_complete in range(1, 101):
+                    time.sleep(0.03)  # Simulate processing time
+                    my_bar.progress(percent_complete, text=progress_text)
+                with st.empty():
+                    my_bar.progress(100, text="Successfully fetched your dialogue.")
+                st.text_area("Recorded Text", recorded_text)
+                return recorded_text, 'recording'
+            else:
+                return '','error'
+        else:
+            uploaded_audio = st.file_uploader("Upload an audio", type=["mp3", "wav"])
+            if uploaded_audio:
+                return uploaded_audio, 'upload'
+            else:
+                return '','error'
