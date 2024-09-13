@@ -1,5 +1,5 @@
 import streamlit as st
-from helpers.get_image_url import get_image_url
+from helpers.utils import get_image_url
 def display_recongnition_result(data):
     with st.expander("Recognization:"):
         cols=st.columns(2)

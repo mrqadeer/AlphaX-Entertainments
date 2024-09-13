@@ -52,32 +52,22 @@ def get_text_prompt():
 def get_image_prompt():
     with st.expander("Image:", expanded=True):
         st.subheader("Enter image URL or Upload an image")
+        
         # Rainbow divider (assuming the CSS is defined somewhere)
         st.markdown("<div class='rainbow-divider'></div>", unsafe_allow_html=True)
-        
-        cols = st.columns(2)
-        with cols[0]:
-            image_url = st.text_input("Image URL",)
-        with cols[1]:
-            uploaded_image = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-        submit = st.button("Submit")
-        if submit:
-            # Restrict the user from entering both a URL and uploading an image
-            if image_url and uploaded_image:
-                st.warning("Please either enter an image URL or upload an image, not both.")
-                st.stop()
-                return 'error','error'
-            
-            # Check if the user provided an image URL or uploaded an image
-            if len(image_url)>1 and (image_url.endswith(".jpg") or image_url.endswith(".png") or image_url.endswith(".jpeg")):
-                return image_url,'url'
+        cols=st.columns([2,2.5,2,2,2])
+        with cols[2]:
+            choice=st.radio("Select an option", ("URL", "Upload"), horizontal=True)
+        if choice=="URL":
+            image_url = st.text_input("Image URL")
+            if image_url:
+                return image_url, 'url'
             else:
-                st.info("Please enter a valid image URL or upload an image.")
-            
-            if uploaded_image:
-                # Process the uploaded image
-                return uploaded_image,'upload'
-            else:
-                return 'error','error'
+                return '','error'
         else:
-            return 'error','error'
+            uploaded_image = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+            if uploaded_image:
+                return uploaded_image, 'upload'
+            else:
+                return '','error'
+  

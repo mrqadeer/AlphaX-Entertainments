@@ -12,6 +12,7 @@ from components.input_components import (get_credentials,
                                          )
 from src.api_handlers import get_llm_response
 
+from helpers.utils import read_image,download_image,save_image
 from components.display_components import display_recongnition_result,display_recommendation_result
 if 'credential_flag' not in st.session_state:
     st.session_state['credential_flag'] = False
@@ -66,20 +67,58 @@ def main():
             dialogue=get_text_prompt()
             submit=st.button("Submit")
             if len(dialogue)>0 and submit:
-               
-                with st.spinner("In progress..."):
-                    data=get_llm_response(dialogue)
-                    data=ast.literal_eval(data)
+                # st.write(dialogue)
+                try:
+                    
+                    with st.spinner("In progress..."):
+                        data=get_llm_response(input_data=dialogue,input_type="dialogue")
+                        data=ast.literal_eval(data)
+                        if 'error' not in data:
 
-                    display_recongnition_result(data)
-                    display_recommendation_result(data)
-                    # Display recommendations in a 2x5 grid
-        elif choice=="Image":
-            # st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-            prompt_image,tag=get_image_prompt()
-            
-            if tag=='url':
+                            display_recongnition_result(data)
+                            display_recommendation_result(data)
+                        else:
+                            st.error("Couldn't process your request. Please try again later.")
+                        # Display recommendations in a 2x5 grid
+                except Exception:
+                    pass
+        elif choice == "Image":
+            # Get the image prompt (either URL or uploaded file)
+            prompt_image, tag = get_image_prompt()
+
+            # Always render the submit button
+            submit = st.button("Submit", key="image")
+
+            # Show the image preview based on the input type (URL or upload)
+            if tag == 'url':
                 
+                image_path = download_image(prompt_image)
+                
+            
+            elif tag == 'upload':
+                image_path = save_image(prompt_image)
+
+            # Only proceed when submit is clicked and there's a valid image
+            if submit:
+                
+                with st.expander("Preview"):
+                    st.image(image_path, use_column_width=True)
+                # st.info("TEst")
+                try:
+                    with st.spinner("In progress..."):
+                        image=read_image(image_path=image_path)
+                        data = get_llm_response(input_data=image, input_type="image")
+                        data = ast.literal_eval(data)
+                        st.json(data)
+                        if 'error' not in data:
+
+                            display_recongnition_result(data)
+                            display_recommendation_result(data)
+                        else:
+                            st.error("Couldn't process your request. Please try again later.")
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")
+
         elif choice=="Audio":
             st.file_uploader("Upload an audio", type=["mp3", "wav"])
             ...
