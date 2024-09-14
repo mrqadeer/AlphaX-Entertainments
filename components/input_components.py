@@ -37,7 +37,7 @@ def get_choice():
     st.markdown("<div class='choice'>Choose an option to get started</div>", unsafe_allow_html=True)
     cols=st.columns([3,6,2.5])
     with cols[1]:
-        choice=st.radio("Select an option", ("Text", "Image", "Audio", "Video", "Recording"), horizontal=True)
+        choice=st.selectbox("Select an option", ("Text", "Image", "Audio", "Video"))
     st.markdown("<div class='rainbow-divider'></div>", unsafe_allow_html=True)
     return choice
 
@@ -60,9 +60,9 @@ def get_image_prompt():
         # Rainbow divider (assuming the CSS is defined somewhere)
         st.markdown("<div class='rainbow-divider'></div>", unsafe_allow_html=True)
         st.markdown("<div class='choice'>Choose an option to get started</div>", unsafe_allow_html=True)
-        cols=st.columns([2,2.5,2,2,2])
-        with cols[2]:
-            choice=st.radio("Select an option", ("URL", "Upload"), horizontal=True)
+        cols=st.columns([3,6,2.5])
+        with cols[1]:
+            choice=st.selectbox("Select an option", ("URL", "Upload"),)
         if choice=="URL":
             image_url = st.text_input("Image URL")
             if image_url:
@@ -78,15 +78,15 @@ def get_image_prompt():
   
 def get_audio_prompt():
     with st.expander("Audio:", expanded=True):
-        st.subheader("Enter audio URL or Upload an audio")
+        st.subheader("Record an audio or Upload an audio")
         
         st.markdown("<div class='rainbow-divider'></div>", unsafe_allow_html=True)
         st.markdown("<div class='choice'>Choose an option to get started</div>", unsafe_allow_html=True)
-        cols=st.columns([2,2.5,2,2,2])
-        with cols[2]:
-            choice=st.radio("Select an option", ("Record", "Upload"), horizontal=True)
+        cols=st.columns([3,6,2.5])
+        with cols[1]:
+            choice=st.selectbox("Select an option", ("Record", "Upload"))
         if choice=="Record":
-            with cols[2]:
+            with cols[1]:
                 with st.progress(0, text="Recording..."):
                     recorded_text = speech_to_text(
                         language='en',

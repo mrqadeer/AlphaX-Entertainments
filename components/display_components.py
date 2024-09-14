@@ -2,7 +2,6 @@ import streamlit as st
 from helpers.utils import get_image_url
 def display_recongnition_result(data):
     with st.expander("Recognization:"):
-        cols=st.columns(2)
         # Display Title
         st.markdown(f"<div class='title'>{data['title']}</div>", unsafe_allow_html=True)
 
@@ -30,9 +29,9 @@ def display_recommendation_result(data):
         st.markdown("<div class='recommendations-title'>Recommendations:</div>", unsafe_allow_html=True)
 
         cols = st.columns(5)
-        for i, rec in enumerate(data["recommendations"]):
+        for i, rec in enumerate(data):
             with cols[i % 5]:
-                title, imdb_url = list(rec.items())[0]
+                title, imdb_url = rec['title'],rec['imdb_url']
                 with st.container():
                     try:
                         image = get_image_url(imdb_url)
