@@ -6,51 +6,89 @@ import streamlit as st
 from bs4 import BeautifulSoup
 from PIL import Image
 
-# Function to download and save the image
+# Constants
+IMAGE_SAVE_FOLDER = 'data/images'
+VIDEO_SAVE_FOLDER = 'data/video'
+DEFAULT_IMAGE = pathlib.Path(IMAGE_SAVE_FOLDER, 'default.png')
+
+# Function to ensure directories exist
+def ensure_directories():
+    pathlib.Path(IMAGE_SAVE_FOLDER).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(VIDEO_SAVE_FOLDER).mkdir(parents=True, exist_ok=True)
+
+# Function to save an uploaded image
 def save_image(uploaded_image):
-    # Ensure the folder exists
-    save_folder = 'data/images'
-    pathlib.Path(save_folder).mkdir(parents=True, exist_ok=True)
-    image_path = os.path.join(save_folder, uploaded_image.name)
-    image=Image.open(uploaded_image)
+    ensure_directories()
+    image_path = os.path.join(IMAGE_SAVE_FOLDER, uploaded_image.name)
+    image = Image.open(uploaded_image)
     image.save(image_path)
     return str(pathlib.Path(image_path))
-    
-def download_image(image_url):
-    # Ensure the folder exists
-    save_folder = 'data/images'
-    pathlib.Path(save_folder).mkdir(parents=True, exist_ok=True)
 
-    # Get the image content
+# Function to save an uploaded video
+def save_video(uploaded_file):
+    ensure_directories()
+    video_path = pathlib.Path(VIDEO_SAVE_FOLDER, uploaded_file.name)
     try:
-        response = requests.get(image_url, stream=True)
-    except (requests.ConnectionError,requests.Timeout,requests.HTTPError):
-        raise e
-    except requests.exceptions.MissingSchema:
-        # st.error(f"Invalid image URL: {image_url}")
-        st.stop()
-        raise e
+        with open(video_path, 'wb') as f:
+            f.write(uploaded_file.read())
+        return str(video_path)
     except Exception as e:
-        st.error(f"An error occurred: {e}")
-        raise e
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Set the full path to save the image
-        image_path = os.path.join(save_folder, 'downloaded.png')
-
-        # Open the image file and write the content
-        with open(image_path, 'wb') as file:
-            file.write(response.content)
-
-        # st.info(f"Image downloaded and saved.")
-    else:
-        st.error(f"Failed to download image. Status code: {response.status_code}")
+        st.error(f"Error processing video: {str(e)}")
         return None
 
+# Function to download an image from a URL
+def download_image(url):
+    ensure_directories()
+    image_path = os.path.join(IMAGE_SAVE_FOLDER, 'downloaded.png')
+    try:
+        response = requests.get(url, headers=HEADERS, stream=True)
+        response.raise_for_status()  # Raises an error on a bad status
+        with open(image_path, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
 
-    return str(pathlib.Path(image_path))
+        return str(pathlib.Path(image_path))
+    except requests.RequestException as e:
+        st.error(f"Failed to download {url}: {e}")
+        st.stop()
+        return str(DEFAULT_IMAGE)
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+        st.stop()
+        return str(DEFAULT_IMAGE)
 
+# Function to get the image URL from IMDb
+def get_image_url(imdb_url):
+    try:
+        response = requests.get(imdb_url, headers=HEADERS, timeout=20)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.content, 'html.parser')
+        img_tag = soup.select_one('div.ipc-media.ipc-media--poster-27x40.ipc-image-media-ratio--poster-27x40 img')
+        img_url = img_tag.get('src') or img_tag.get('data-src') or img_tag.get('data-lazy')
+        return img_url if img_url else str(DEFAULT_IMAGE)
+    except (requests.RequestException, AttributeError) as e:
+        st.error(f"Failed to retrieve image from {imdb_url}: {e}")
+        return str(DEFAULT_IMAGE)
+
+# Function to read an image and encode it in base64
+def read_image(image_path):
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"The file at {image_path} does not exist.")
+    try:
+        with open(image_path, "rb") as image_file:
+            image_data = base64.b64encode(image_file.read()).decode("utf-8")
+            return image_data
+    except Exception as e:
+        raise e  # Let the exception propagate for debugging
+
+# Function to validate the size of an audio file
+def validate_audio_file(uploaded_file):
+    file_size_mb = uploaded_file.size / (1024 * 1024)  # Convert bytes to MB
+    max_size_mb = 4  # Set maximum file size to 4 MB
+    return file_size_mb <= max_size_mb
+
+# Headers for web requests
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
     'Accept-Language': 'en-US,en;q=0.9',
@@ -59,83 +97,10 @@ HEADERS = {
     'Upgrade-Insecure-Requests': '1'
 }
 
-def download_image(url):
-    # Ensure the folder exists
-    save_folder = 'data/images'
-    pathlib.Path(save_folder).mkdir(parents=True, exist_ok=True)
-    image_path=os.path.join(save_folder, 'downloaded.png')
-    try:
-        response = requests.get(url, headers=HEADERS, stream=True)
-        response.raise_for_status()  # Raises an error on a bad status
-        with open(image_path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-        st.success(f"Image downloaded successfully")
-        return str(pathlib.Path(image_path))
-    except requests.RequestException as e:
-        st.error(f"Failed to download {url}: {e}")
-        raise e
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
-        raise e
-
-
-
-
-def get_image_url(imdb_url):
-
-    default_img = pathlib.Path('data/images/default.png')  
-    try:
-        response = requests.get(imdb_url, headers=HEADERS, timeout=10)  # Added timeout
-        soup = BeautifulSoup(response.content, 'html.parser')
-        
-        # Use CSS selector for more reliable and faster searching
-        div = soup.select_one('div.ipc-media.ipc-media--poster-27x40.ipc-image-media-ratio--poster-27x40')
-
-        if div:
-            # Check for img tag
-            img_tag = div.find('img')
-
-            # Handle lazy-loading by checking data attributes
-            if img_tag:
-                img_url = img_tag.get('src') or img_tag.get('data-src') or img_tag.get('data-lazy')
-                if img_url:
-                    return img_url
-                
-        # If no image found, return default image
-        return default_img
-
-    except (requests.ConnectionError, requests.HTTPError, requests.Timeout) as e:
-        return default_img
-
-
-
-
-
-def read_image(image_path):
-    # Check if file exists first
-    # st.write(image_path)
-    if not os.path.exists(image_path):
-        raise FileNotFoundError(f"The file at {image_path} does not exist.")
-
-    try:
-        with open(image_path, "rb") as image_file:
-            image_data = base64.b64encode(image_file.read()).decode("utf-8")
-            return image_data
-    except Exception as e:
-        raise e  # Let the exception propagate for debugging
-
-
-def validate_audio_file(uploaded_file):
-    file_size = uploaded_file.size
-    max_size_mb = 4  # Set maximum file size to 10 MB
-
-    if file_size > max_size_mb * 1024 * 1024:
-        return False
-    return True
-    
-
 if __name__ == "__main__":
-    path='data/images/downloaded.png'
-    print(read_image(path))
+    # Example usage
+    path = 'data/images/downloaded.png'
+    try:
+        print(read_image(path))
+    except Exception as e:
+        print(f"Error: {e}")

@@ -1,58 +1,88 @@
+# src/audio_handlers.py
 import ast
 import streamlit as st
+from typing import Optional, Tuple
+
 from components.input_components import get_audio_prompt
 from src.audio_processing import audio_processing, transcribe_audio_to_text
-from src.api_handlers import get_recommendation_response,get_recognition_response
-from components.display_components import display_recongnition_result, display_recommendation_result
-def audio_handler():
+from src.api_handlers import get_recognition_response, get_recommendation_response
+from components.display_components import display_recognition_result, display_recommendation_result
+
+
+def audio_handler() -> Optional[None]:
     """
-    Handle audio input, either via URL or upload.
-    Displays a preview after the user submits the form.
-    """
+    Handles audio input (either via URL or uploaded file) for dialogue recognition and recommendation.
     
-    # Get the audio prompt (either URL or uploaded file)
-    prompt_audio, tag = get_audio_prompt()
+    Displays a preview of the audio file and performs transcription, recognition, and recommendation processing.
+    """
+    try:
+        # Get the audio prompt (either URL or uploaded file)
+        prompt_audio, tag = get_audio_prompt()
 
-    # Render the submit button
-    submit = st.button("Submit", key="audio")
+        if not prompt_audio:
+            raise ValueError("No audio input provided.")
 
-    # Only proceed if submit button is clicked and there's valid audio input
-    if submit:
-        # Show the audio preview based on the input type (URL or upload)
-        if tag == 'recording':
-            audio_text = prompt_audio
-        
-        elif tag == 'upload':
-            with st.expander("Preview Audio"):
-                st.audio(prompt_audio, format="audio/wav", start_time=0)
+        # Render the submit button
+        submit: bool = st.button("Submit", key="audio")
 
-            # Optionally process the audio file
-            with st.spinner("Processing audio..."):
-                try:
-                    audio_path = audio_processing(prompt_audio)
-                    audio_text = transcribe_audio_to_text(audio_path)
-                    st.text_area("Transcribed Text", audio_text,disabled=True)
-                except Exception as e:
-                    st.error(f"An error occurred: {e}")
-                    raise e
-            
-           
-            
-        # Proceed with any further audio processing
-        try:
-            with st.spinner("In progress..."):
-                data = get_recognition_response(
-                    input_data=audio_text, input_type="dialogue")
-                data = ast.literal_eval(data)
-                if 'error' not in data:
+        # Only proceed if the submit button is clicked and valid audio input is available
+        if submit:
+            audio_text: str = ""
 
-                    display_recongnition_result(data)
-                    data=get_recommendation_response(str(data))
-                    display_recommendation_result(data)
-                else:
-                    st.error(data.get('error','Please try again with a different dialogue.'))
-            # Add your logic for recognition and recommendation here
-            
-        except Exception as e:
-            st.error(f"An error occurred: {e}")
+            try:
+                # Handle audio based on input type (recording or upload)
+                if tag == 'recording':
+                    # If audio is from recording, assume it's already in text form
+                    audio_text = prompt_audio
 
+                elif tag == 'upload':
+                    # If audio is uploaded, show a preview and process the file
+                    with st.expander("Preview Audio"):
+                        st.audio(prompt_audio, format="audio/wav", start_time=0)
+
+                    with st.spinner("Processing audio..."):
+                        # Process uploaded audio
+                        audio_path: Optional[str] = audio_processing(prompt_audio)
+                        if not audio_path:
+                            raise ValueError("Error processing the audio file.")
+
+                        # Transcribe audio to text
+                        audio_text = transcribe_audio_to_text(audio_path)
+                        if not audio_text:
+                            raise ValueError("Transcription failed.")
+                        
+                        # Display transcribed text
+                        st.text_area("Transcribed Text", audio_text, disabled=True)
+
+            except ValueError as ve:
+                st.error(f"Value Error: {ve}")
+                return
+            except Exception as e:
+                st.error(f"An error occurred during audio processing: {e}")
+                return
+
+            # Proceed with recognition and recommendation
+            try:
+                with st.spinner("Recognition and recommendation in progress..."):
+                    # Perform dialogue recognition
+                    data: str = get_recognition_response(input_data=audio_text, input_type="dialogue")
+                    data_dict: dict = ast.literal_eval(data)
+
+                    if 'error' not in data_dict:
+                        # Display recognition results
+                        display_recognition_result(data_dict)
+
+                        # Fetch and display recommendations
+                        recommendation_data: str = get_recommendation_response(str(data_dict))
+                        display_recommendation_result(recommendation_data)
+                    else:
+                        st.error(data_dict.get('error', 'Please try again with a different dialogue.'))
+
+            except Exception as e:
+                st.error(f"An error occurred during recognition or recommendation: {e}")
+                return
+
+    except ValueError as ve:
+        st.error(f"{ve}")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {e}")

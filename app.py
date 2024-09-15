@@ -5,12 +5,16 @@ from PIL import Image
 from io import BytesIO
 from streamlit_option_menu import option_menu
 from components.input_components import (get_credentials,
-                                         get_choice,
-                                         get_audio_prompt
-                                         )
+                                         get_choice)
+
+
 from src.text_handlers import text_handler
+
+
+
 from src.image_handlers import image_handler
 from src.audio_handlers import audio_handler
+from src.video_handlers import video_handler
 
 if 'credential_flag' not in st.session_state:
     st.session_state['credential_flag'] = False
@@ -32,7 +36,6 @@ load_css("static/style.css")
 
 
 def main():
-    # load_css("static/style.css")  # Path to your CSS file
 
     st.title("AlphaX Entertainments")
 
@@ -79,12 +82,7 @@ def main():
         elif choice == "Audio":
             audio_handler()
         elif choice == "Video":
-            st.file_uploader("Upload a video", type=["mp4", "mov"])
-            ...
-        elif choice == "Recording":
-            st.file_uploader("Upload a recording", type=[
-                             "mp3", "wav", "mp4", "mov"])
-            ...
+            video_handler()
         else:
             st.write("Please select a valid option")
 

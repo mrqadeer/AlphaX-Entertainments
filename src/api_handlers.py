@@ -1,160 +1,141 @@
-
-
 import os
 import ast
+
 import streamlit as st
-from langchain_google_genai import ChatGoogleGenerativeAI
+from typing import Optional, Union, Tuple, List
 from langchain_openai.chat_models import ChatOpenAI
-from langchain_google_genai.chat_models import ChatGoogleGenerativeAIError
+
 from langchain_core.messages import HumanMessage
-from google.generativeai.types.safety_types import HarmBlockThreshold, HarmCategory
+from prompts.system_prompts import (RECOMMENDATIONS_PROMPT, RECOGNITION_PROMPT)
 
-from prompts.system_prompts import RECOMMENDATIONS_PROMPT,RECOGNITION_PROMPT
-# Function to get the specific LLM model
 from dotenv import load_dotenv
+from openai import (InternalServerError,APIError,ConflictError,NotFoundError,
+                    APIStatusError,RateLimitError,APITimeoutError,BadRequestError,
+                    APIConnectionError,AuthenticationError,InternalServerError,PermissionDeniedError,
+                    LengthFinishReasonError,UnprocessableEntityError,
+                    APIResponseValidationError,ContentFilterFinishReasonError)
+# Load environment variables
 load_dotenv()
-# def get_llm_instance(model="gemini-1.5-pro", max_tokens=4000):
-#     try:
-#         safety_settings = {
-#                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-#                 HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-#                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-#                 HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
-#             }
-#         # Get the API key directly from the environment variable
-#         api_key = os.getenv("GOOGLE_API_KEY")
+
+# Constants
+class LLMHandler:
+    def __init__(self, model: str, temperature: float = 0.7, max_tokens: int = 2000, 
+                 max_retries: int = 3, timeout: int = 60, api_key: Optional[str] = None):
+        self.model = model
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+        self.max_retries = max_retries
+        self.timeout = timeout
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.llm_instance = self.get_llm_instance()
         
-#         if not api_key:
-#             raise ValueError("API key is missing or not set in the environment.")
-        
-#         # Pass the API key directly to the ChatGoogleGenerativeAI
-#         llm = ChatGoogleGenerativeAI(model=model, max_tokens=max_tokens, api_key=api_key, safety_settings=safety_settings,
-#                                      temperature=0.7)
-#         return llm
-#     except ChatGoogleGenerativeAIError as e:
-#         st.error(f"Error: {e}")
-#         raise e
-#     except Exception as e:
-#         st.error(f"Error: {e}")
-#         raise e
-def get_llm_instance(model="gpt-4o",
-                     temperature=0.7, 
-                     max_tokens=2000,
-                     max_retries=3,
-                     timeout=60,
-                     api_key=None):
-    try:
-        api_key = os.getenv("OPENAI_API_KEY")
-        
-        if not api_key:
+    def get_llm_instance(self) -> Optional[ChatOpenAI]:
+        if not self.api_key:
             raise ValueError("API key is missing or not set in the environment.")
-        
-        
-        # Pass the API key directly to the ChatGoogleGenerativeAI
-        llm = ChatOpenAI(model_name=model,
-                         temperature=temperature, 
-                         max_tokens=max_tokens,
-                         max_retries=max_retries,
-                         timeout=timeout,
-                         api_key=api_key)
-        return llm
-    except Exception as e:
-        st.error(f"Error: {e}")
-        raise e
-
-# # Function to handle dialogue LLM responses
-def get_dialogue_llm_response(llm, dialogue:str):
-    try:
+        try:
+            return ChatOpenAI(
+                model_name=self.model,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens,
+                max_retries=self.max_retries,
+                timeout=self.timeout,
+                api_key=self.api_key
+            )
+        except Exception as e:
+            st.error(f"Error creating LLM instance: {e}")
+            return None
+    
+    def handle_response(self, messages: List[Tuple[str, str]]) -> str:
+        if not self.llm_instance:
+            raise ValueError("LLM instance is not created.")
+        try:
+            response = self.llm_instance.invoke(messages)
+            return response.content.strip().replace("json", "").replace("```", "").replace('\n', '')
+        except (AuthenticationError, InternalServerError, RateLimitError, APIConnectionError, APIError) as e:
+            self.handle_openai_error(e)
+        except Exception as e:
+            st.error(f"Error handling response: {e}")
+            raise e
+    def handle_openai_error(self, error: Exception):
+        if isinstance(error, AuthenticationError):
+            st.error("Authentication Error: Invalid API Key or authentication issue.")
+        elif isinstance(error, BadRequestError):
+            st.error("Bad Request Error: Your request is invalid.")
+        elif isinstance(error, APIConnectionError):
+            st.error("API Connection Error: Failed to connect to the API.")
+        elif isinstance(error, RateLimitError):
+            st.error("Rate Limit Error: You have exceeded your rate limit.")
+        elif isinstance(error, APITimeoutError):
+            st.error("API Timeout Error: The request timed out.")
+        elif isinstance(error, InternalServerError):
+            st.error("Internal Server Error: Something went wrong on OpenAI's side.")
+        elif isinstance(error, ConflictError):
+            st.error("Conflict Error: The request conflicts with the current state.")
+        elif isinstance(error, NotFoundError):
+            st.error("Not Found Error: The requested resource was not found.")
+        elif isinstance(error, APIStatusError):
+            st.error("API Status Error: There is an issue with the API status.")
+        elif isinstance(error, PermissionDeniedError):
+            st.error("Permission Denied Error: You do not have permission to perform this action.")
+        elif isinstance(error, LengthFinishReasonError):
+            st.error("Length Finish Reason Error: The completion length exceeded the limit.")
+        elif isinstance(error, UnprocessableEntityError):
+            st.error("Unprocessable Entity Error: The request is well-formed but unable to be processed.")
+        elif isinstance(error, APIResponseValidationError):
+            st.error("API Response Validation Error: The response from the API did not match the expected format.")
+        elif isinstance(error, ContentFilterFinishReasonError):
+            st.error("Content Filter Finish Reason Error: The content was filtered out by the API.")
+        else:
+            st.error(f"Unhandled OpenAI error: {error}")
+class RecognitionHandler(LLMHandler):
+    def __init__(self, model: str = "gpt-4o", **kwargs):
+        super().__init__(model=model, **kwargs)
+    
+    def get_dialogue_response(self, dialogue: str) -> str:
         messages = [("system", RECOGNITION_PROMPT), ("human", dialogue)]
-        response = llm.invoke(messages)
-        
-        # Parse and clean up the response
-        response = response.content.strip().replace("json", "").replace("```", "").replace('\n', '')
-        # Optionally parse as JSON if needed
-        # response = ast.literal_eval(response)
-        
-        return response
-    except ChatGoogleGenerativeAIError as e:
-        # st.error("You are running out of credits. Check you qouta")
-        st.error(f"Error: {e}")
-        
-        raise e
-        
-    except Exception as e:
-        st.error(f"Error: {e}")
-        raise e
-
-# Function to handle image-based LLM responses
-def get_image_llm_response(llm, image_data:str):
+        return self.handle_response(messages)
     
-    try:
+    def get_image_response(self, image_data: str) -> str:
         message = HumanMessage(
-        content=[
-            {"type": "text", "text": RECOGNITION_PROMPT},
-            {
-                "type": "image_url",
-                "image_url": {"url": f"data:image/jpeg;base64,{image_data}"},
-            },
-        ],
-    )
-        response = llm.invoke([message])
-        
-        # Parse and clean up the response
-        response = response.content.strip().replace("json", "").replace("```", "").replace('\n', '')
-        # Optionally parse as JSON if needed
-        # response = ast.literal_eval(response)
-        
-        return response
-    except ChatGoogleGenerativeAIError as e:
-        # st.error("You are running out of credits. Check you qouta")
-        st.error(f"Error: {e}")
-        
-        raise e
-        
-    except Exception as e:
-        st.error(f"Error: {e}")
-        raise e
+            content=[
+                {"type": "text", "text": RECOGNITION_PROMPT},
+                {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_data}"}}
+            ]
+        )
+        return self.handle_response([message])
 
-# Main function to handle LLM response based on input type
-def get_recognition_response(input_data, input_type="dialogue"):
-    # Get the LLM instance (can be expanded to dynamically choose models if needed)
-    llm = get_llm_instance()
+class RecommendationHandler(LLMHandler):
+    def __init__(self, model: str = "gpt-4o", **kwargs):
+        super().__init__(model=model, **kwargs)
     
-    # Handle response based on the input type
-    if input_type == "dialogue":
-        return get_dialogue_llm_response(llm, input_data)
-    elif input_type == "image":
-        return get_image_llm_response(llm, input_data)
-    else:
-        st.error("Invalid input type provided.")
-        return None
-# def get_recommendation_llm_instance(model="gpt-3.5-turbo", max_tokens=500):
-#     try:
-#         api_key = os.getenv("OPENAI_API_KEY")
-        
-#         if not api_key:
-#             raise ValueError("API key is missing or not set in the environment.")
-#         # Pass the API key directly to the ChatGoogleGenerativeAI
-#         llm = ChatOpenAI(model_name=model, 
-#                          max_tokens=max_tokens,
-#                          temperature=0.5, 
-#                          api_key=api_key)
-#         return llm
-    
-#     except Exception as e:
-#         st.error(f"Error: {e}")
-#         raise e
-    
-
-def get_recommendation_response(input_data:str):
-    # st.info("In progress...Recommendations will be displayed here")
-    try:
-        llm=get_llm_instance()
+    def get_recommendation_response(self, input_data: str) -> dict:
         messages = [("system", RECOMMENDATIONS_PROMPT), ("human", input_data)]
-        response=llm.invoke(messages)
-        response = ast.literal_eval(response.content.strip())
-        return response
+        response_str = self.handle_response(messages)
+        try:
+            return ast.literal_eval(response_str)
+        except Exception as e:
+            st.error(f"Error parsing recommendations response: {e}")
+            raise e
+
+# Usage examples
+def get_recognition_response(input_data: str, input_type: str = "dialogue") -> Optional[str]:
+    try:
+        handler = RecognitionHandler()
+        if input_type == "dialogue":
+            return handler.get_dialogue_response(input_data)
+        elif input_type == "image":
+            return handler.get_image_response(input_data)
+        else:
+            st.error("Invalid input type provided.")
+            return None
     except Exception as e:
         st.error(f"Error: {e}")
-        raise e
-    
+        return None
+
+def get_recommendation_response(input_data: str) -> Optional[dict]:
+    try:
+        handler = RecommendationHandler()
+        return handler.get_recommendation_response(input_data)
+    except Exception as e:
+        st.error(f"Error: {e}")
+        return None
