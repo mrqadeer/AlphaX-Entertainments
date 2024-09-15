@@ -31,11 +31,14 @@ def image_handler():
                 data = get_recognition_response(
                     input_data=image, input_type="image")
                 data = ast.literal_eval(data)
-                st.json(data)
+                # st.json(data)
                 if 'error' not in data:
 
                     display_recongnition_result(data)
+                    data=get_recommendation_response(str(data))
+                    # st.json(data)
                     display_recommendation_result(data)
+                    
                 else:
                     st.error(
                         "Couldn't process your request. Please try again later.")

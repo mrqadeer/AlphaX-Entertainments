@@ -10,6 +10,7 @@ from components.input_components import (get_credentials,
                                          )
 from src.text_handlers import text_handler
 from src.image_handlers import image_handler
+from src.audio_handlers import audio_handler
 
 if 'credential_flag' not in st.session_state:
     st.session_state['credential_flag'] = False
@@ -76,10 +77,7 @@ def main():
             image_handler()
 
         elif choice == "Audio":
-            audio_prompt, tag = get_audio_prompt()
-            if tag == 'recording':
-                audio_text = audio_prompt
-                st.write(audio_text)
+            audio_handler()
         elif choice == "Video":
             st.file_uploader("Upload a video", type=["mp4", "mov"])
             ...

@@ -1,3 +1,4 @@
+# src\text_handlers.py
 import ast
 import streamlit as st
 
@@ -24,8 +25,7 @@ def text_handler():
                     # st.json(data)
                     display_recommendation_result(data)
                 else:
-                    st.error(
-                        "Couldn't process your request. Please try again with different text.")
+                    st.error(data.get('error','Please try again with a different dialogue.'))
                 # Display recommendations in a 2x5 grid
         except Exception:
             pass

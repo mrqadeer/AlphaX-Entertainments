@@ -1,3 +1,5 @@
+# components\input_components.py
+
 import streamlit as st
 from streamlit_mic_recorder import speech_to_text
 import time
@@ -84,7 +86,7 @@ def get_audio_prompt():
         st.markdown("<div class='choice'>Choose an option to get started</div>", unsafe_allow_html=True)
         cols=st.columns([3,6,2.5])
         with cols[1]:
-            choice=st.selectbox("Select an option", ("Record", "Upload"))
+            choice=st.selectbox("Select an option", ("Upload","Record"),)
         if choice=="Record":
             with cols[1]:
                 with st.progress(0, text="Recording..."):

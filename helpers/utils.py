@@ -127,6 +127,15 @@ def read_image(image_path):
         raise e  # Let the exception propagate for debugging
 
 
+def validate_audio_file(uploaded_file):
+    file_size = uploaded_file.size
+    max_size_mb = 4  # Set maximum file size to 10 MB
+
+    if file_size > max_size_mb * 1024 * 1024:
+        return False
+    return True
+    
+
 if __name__ == "__main__":
     path='data/images/downloaded.png'
     print(read_image(path))

@@ -13,31 +13,7 @@ from prompts.system_prompts import RECOMMENDATIONS_PROMPT,RECOGNITION_PROMPT
 # Function to get the specific LLM model
 from dotenv import load_dotenv
 load_dotenv()
-def get_llm_instance(model="gemini-1.5-pro", max_tokens=4000):
-    try:
-        safety_settings = {
-                HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-                HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
-            }
-        # Get the API key directly from the environment variable
-        api_key = os.getenv("GOOGLE_API_KEY")
-        
-        if not api_key:
-            raise ValueError("API key is missing or not set in the environment.")
-        
-        # Pass the API key directly to the ChatGoogleGenerativeAI
-        llm = ChatGoogleGenerativeAI(model=model, max_tokens=max_tokens, api_key=api_key, safety_settings=safety_settings,
-                                     temperature=0.7)
-        return llm
-    except ChatGoogleGenerativeAIError as e:
-        st.error(f"Error: {e}")
-        raise e
-    except Exception as e:
-        st.error(f"Error: {e}")
-        raise e
-# def get_llm_instance(model="gpt-4o", max_tokens=4000):
+# def get_llm_instance(model="gemini-1.5-pro", max_tokens=4000):
 #     try:
 #         safety_settings = {
 #                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
@@ -46,16 +22,45 @@ def get_llm_instance(model="gemini-1.5-pro", max_tokens=4000):
 #                 HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
 #             }
 #         # Get the API key directly from the environment variable
+#         api_key = os.getenv("GOOGLE_API_KEY")
+        
+#         if not api_key:
+#             raise ValueError("API key is missing or not set in the environment.")
         
 #         # Pass the API key directly to the ChatGoogleGenerativeAI
-#         llm = ChatOpenAI(temperature=0.5, model_name="gpt-4o", max_tokens=4000,api_key=os.environ["OPENAI_API_KEY"])
+#         llm = ChatGoogleGenerativeAI(model=model, max_tokens=max_tokens, api_key=api_key, safety_settings=safety_settings,
+#                                      temperature=0.7)
 #         return llm
-#     # except ChatGoogleGenerativeAIError as e:
-#     #     st.error(f"Error: {e}")
-#     #     raise e
+#     except ChatGoogleGenerativeAIError as e:
+#         st.error(f"Error: {e}")
+#         raise e
 #     except Exception as e:
 #         st.error(f"Error: {e}")
 #         raise e
+def get_llm_instance(model="gpt-4o",
+                     temperature=0.7, 
+                     max_tokens=2000,
+                     max_retries=3,
+                     timeout=60,
+                     api_key=None):
+    try:
+        api_key = os.getenv("OPENAI_API_KEY")
+        
+        if not api_key:
+            raise ValueError("API key is missing or not set in the environment.")
+        
+        
+        # Pass the API key directly to the ChatGoogleGenerativeAI
+        llm = ChatOpenAI(model_name=model,
+                         temperature=temperature, 
+                         max_tokens=max_tokens,
+                         max_retries=max_retries,
+                         timeout=timeout,
+                         api_key=api_key)
+        return llm
+    except Exception as e:
+        st.error(f"Error: {e}")
+        raise e
 
 # # Function to handle dialogue LLM responses
 def get_dialogue_llm_response(llm, dialogue:str):
@@ -123,28 +128,28 @@ def get_recognition_response(input_data, input_type="dialogue"):
     else:
         st.error("Invalid input type provided.")
         return None
-def get_recommendation_llm_instance(model="gpt-3.5-turbo", max_tokens=2000):
-    try:
-        api_key = os.getenv("OPENAI_API_KEY")
+# def get_recommendation_llm_instance(model="gpt-3.5-turbo", max_tokens=500):
+#     try:
+#         api_key = os.getenv("OPENAI_API_KEY")
         
-        if not api_key:
-            raise ValueError("API key is missing or not set in the environment.")
-        # Pass the API key directly to the ChatGoogleGenerativeAI
-        llm = ChatOpenAI(model_name=model, 
-                         max_tokens=max_tokens,
-                         temperature=0.5, 
-                         api_key=api_key)
-        return llm
+#         if not api_key:
+#             raise ValueError("API key is missing or not set in the environment.")
+#         # Pass the API key directly to the ChatGoogleGenerativeAI
+#         llm = ChatOpenAI(model_name=model, 
+#                          max_tokens=max_tokens,
+#                          temperature=0.5, 
+#                          api_key=api_key)
+#         return llm
     
-    except Exception as e:
-        st.error(f"Error: {e}")
-        raise e
+#     except Exception as e:
+#         st.error(f"Error: {e}")
+#         raise e
     
 
 def get_recommendation_response(input_data:str):
     # st.info("In progress...Recommendations will be displayed here")
     try:
-        llm=get_recommendation_llm_instance()
+        llm=get_llm_instance()
         messages = [("system", RECOMMENDATIONS_PROMPT), ("human", input_data)]
         response=llm.invoke(messages)
         response = ast.literal_eval(response.content.strip())
