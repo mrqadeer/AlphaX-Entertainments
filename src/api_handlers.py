@@ -21,6 +21,17 @@ load_dotenv()
 class LLMHandler:
     def __init__(self, model: str, temperature: float = 0.7, max_tokens: int = 2000, 
                  max_retries: int = 3, timeout: int = 60, api_key: Optional[str] = None):
+        """
+        Initialize an LLMHandler instance with the given model, temperature, max_tokens, max_retries, timeout, and api_key.
+        
+        Args:
+            model (str): The name of the model to use.
+            temperature (float): The temperature to use when generating text. Defaults to 0.7.
+            max_tokens (int): The maximum number of tokens to generate. Defaults to 2000.
+            max_retries (int): The maximum number of retries to make if the API call fails. Defaults to 3.
+            timeout (int): The timeout in seconds for the API call. Defaults to 60.
+            api_key (Optional[str]): The API key to use. If not provided, the API key will be read from the environment variable OPENAI_API_KEY.
+        """
         self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
@@ -30,6 +41,15 @@ class LLMHandler:
         self.llm_instance = self.get_llm_instance()
         
     def get_llm_instance(self) -> Optional[ChatOpenAI]:
+        """
+        Create an instance of the Langchain OpenAI chat model with the provided parameters, or return None if an error occurs.
+        
+        Args:
+            None
+        
+        Returns:
+            Optional[ChatOpenAI]: The created LLM instance, or None if an error occurs.
+        """
         if not self.api_key:
             raise ValueError("API key is missing or not set in the environment.")
         try:
@@ -46,6 +66,19 @@ class LLMHandler:
             return None
     
     def handle_response(self, messages: List[Tuple[str, str]]) -> str:
+        """
+        Handle the response from the LLM instance, including any errors that may occur.
+
+        Args:
+            messages (List[Tuple[str, str]]): The messages to send to the LLM instance.
+
+        Returns:
+            str: The response from the LLM instance, or an error message if an error occurs.
+
+        Raises:
+            ValueError: If the LLM instance is not created.
+            Exception: If any other error occurs.
+        """
         if not self.llm_instance:
             raise ValueError("LLM instance is not created.")
         try:
@@ -57,6 +90,18 @@ class LLMHandler:
             st.error(f"Error handling response: {e}")
             raise e
     def handle_openai_error(self, error: Exception):
+        """
+        Handle errors from OpenAI.
+
+        This method handles errors that occur when invoking the LLM instance.
+        It displays an error message to the user based on the type of error that occurred.
+
+        Args:
+            error (Exception): The error that occurred.
+
+        Raises:
+            ValueError: If the LLM instance is not created.
+        """
         if isinstance(error, AuthenticationError):
             st.error("Authentication Error: Invalid API Key or authentication issue.")
         elif isinstance(error, BadRequestError):
@@ -89,9 +134,25 @@ class LLMHandler:
             st.error(f"Unhandled OpenAI error: {error}")
 class RecognitionHandler(LLMHandler):
     def __init__(self, model: str = "gpt-4o", **kwargs):
+        """
+        Initialize the RecognitionHandler.
+
+        Args:
+            model (str, optional): The model to use. Defaults to "gpt-4o".
+            **kwargs: Additional keyword arguments to pass to the parent class.
+        """
         super().__init__(model=model, **kwargs)
     
     def get_dialogue_response(self, dialogue: str) -> str:
+        """
+        Get the response from the LLM given a dialogue.
+
+        Args:
+            dialogue (str): The dialogue to get the response for.
+
+        Returns:
+            str: The response from the LLM.
+        """
         messages = [("system", RECOGNITION_PROMPT), ("human", dialogue)]
         return self.handle_response(messages)
     
@@ -106,9 +167,30 @@ class RecognitionHandler(LLMHandler):
 
 class RecommendationHandler(LLMHandler):
     def __init__(self, model: str = "gpt-4o", **kwargs):
+        """
+        Initialize a RecommendationHandler instance.
+
+        Args:
+            model (str, optional): The name of the LLM model to use. Defaults to "gpt-4o".
+            **kwargs: Additional keyword arguments to pass to the LLMHandler constructor.
+        """
+
         super().__init__(model=model, **kwargs)
     
     def get_recommendation_response(self, input_data: str) -> dict:
+        """
+        Get a recommendation response for a given input.
+
+        Args:
+            input_data (str): The input data to generate recommendations for.
+
+        Returns:
+            dict: The recommendation response in JSON format.
+
+        Raises:
+            Exception: If there is an error parsing the recommendations response.
+        """
+        
         messages = [("system", RECOMMENDATIONS_PROMPT), ("human", input_data)]
         response_str = self.handle_response(messages)
         try:
@@ -119,6 +201,19 @@ class RecommendationHandler(LLMHandler):
 
 # Usage examples
 def get_recognition_response(input_data: str, input_type: str = "dialogue") -> Optional[str]:
+    """
+    Get a recognition response for a given input.
+
+    Args:
+        input_data (str): The input data to generate recognition for.
+        input_type (str, optional): The type of input data. Defaults to "dialogue".
+
+    Returns:
+        Optional[str]: The recognition response in JSON format, or None if there is an error.
+
+    Raises:
+        Exception: If there is an error generating recognition response.
+    """
     try:
         handler = RecognitionHandler()
         if input_type == "dialogue":
@@ -133,6 +228,18 @@ def get_recognition_response(input_data: str, input_type: str = "dialogue") -> O
         return None
 
 def get_recommendation_response(input_data: str) -> Optional[dict]:
+    """
+    Get a recommendation response for a given input.
+
+    Args:
+        input_data (str): The input data to generate recommendations for.
+
+    Returns:
+        Optional[dict]: The recommendation response in JSON format, or None if there is an error.
+
+    Raises:
+        Exception: If there is an error generating recommendations response.
+    """
     try:
         handler = RecommendationHandler()
         return handler.get_recommendation_response(input_data)

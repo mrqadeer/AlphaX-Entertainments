@@ -13,11 +13,39 @@ DEFAULT_IMAGE = pathlib.Path(IMAGE_SAVE_FOLDER, 'default.png')
 
 # Function to ensure directories exist
 def ensure_directories():
+    """
+    Ensure that the directories for saving images and videos exist.
+
+    This function makes sure that the directories specified in the
+    constants IMAGE_SAVE_FOLDER and VIDEO_SAVE_FOLDER exist. If they do
+    not exist, they are created.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+    """
     pathlib.Path(IMAGE_SAVE_FOLDER).mkdir(parents=True, exist_ok=True)
     pathlib.Path(VIDEO_SAVE_FOLDER).mkdir(parents=True, exist_ok=True)
 
 # Function to save an uploaded image
 def save_image(uploaded_image):
+    """
+    Save an uploaded image to the server.
+
+    Parameters
+    ----------
+    uploaded_image : UploadedFile
+        The image to be saved.
+
+    Returns
+    -------
+    str
+        The path to the saved image.
+    """
     ensure_directories()
     image_path = os.path.join(IMAGE_SAVE_FOLDER, uploaded_image.name)
     image = Image.open(uploaded_image)
@@ -26,6 +54,19 @@ def save_image(uploaded_image):
 
 # Function to save an uploaded video
 def save_video(uploaded_file):
+    """
+    Save an uploaded video to the server.
+
+    Parameters
+    ----------
+    uploaded_file : UploadedFile
+        The video to be saved.
+
+    Returns
+    -------
+    str
+        The path to the saved video.
+    """
     ensure_directories()
     video_path = pathlib.Path(VIDEO_SAVE_FOLDER, uploaded_file.name)
     try:
@@ -38,6 +79,19 @@ def save_video(uploaded_file):
 
 # Function to download an image from a URL
 def download_image(url):
+    """
+    Download an image from a URL and save it to the server.
+
+    Parameters
+    ----------
+    url : str
+        The URL of the image to download.
+
+    Returns
+    -------
+    str
+        The path to the saved image.
+    """
     ensure_directories()
     image_path = os.path.join(IMAGE_SAVE_FOLDER, 'downloaded.png')
     try:
@@ -60,6 +114,19 @@ def download_image(url):
 
 # Function to get the image URL from IMDb
 def get_image_url(imdb_url):
+    """
+    Get the image URL from an IMDb page.
+
+    Parameters
+    ----------
+    imdb_url : str
+        The URL of the IMDb page to retrieve the image from.
+
+    Returns
+    -------
+    str
+        The URL of the image or the default image path if the request fails.
+    """
     try:
         response = requests.get(imdb_url, headers=HEADERS, timeout=20)
         response.raise_for_status()
@@ -73,6 +140,26 @@ def get_image_url(imdb_url):
 
 # Function to read an image and encode it in base64
 def read_image(image_path):
+    """
+    Read an image and encode it in base64.
+
+    Parameters
+    ----------
+    image_path : str
+        The path to the image file.
+
+    Returns
+    -------
+    str
+        The base64 encoded image data.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the image file does not exist.
+    Exception
+        If there is an error reading the file.
+    """
     if not os.path.exists(image_path):
         raise FileNotFoundError(f"The file at {image_path} does not exist.")
     try:
@@ -84,6 +171,25 @@ def read_image(image_path):
 
 # Function to validate the size of an audio file
 def validate_audio_file(uploaded_file):
+    """
+    Validate the size of an uploaded audio file.
+
+    Parameters
+    ----------
+    uploaded_file : st.uploaded_file_manager.UploadedFile
+        The uploaded audio file.
+
+    Returns
+    -------
+    bool
+        True if the file size is less than or equal to 4 MB, False otherwise.
+
+    Raises
+    ------
+    ValueError
+        If the uploaded file is not an audio file.
+    """
+    
     file_size_mb = uploaded_file.size / (1024 * 1024)  # Convert bytes to MB
     max_size_mb = 4  # Set maximum file size to 4 MB
     return file_size_mb <= max_size_mb
