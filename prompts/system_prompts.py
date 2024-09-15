@@ -739,42 +739,25 @@ You will be provided with the following information:
 
 ```
 **Instructions:**
-
-Step 1: Prioritize Prequels, Sequels, and Spin-offs
-1. Mandatory Check:
-  - Search for prequels, sequels, or spin-offs before suggesting any other media.These should be your first recommendations.
-  - Make sure each title matches IMDb data (title, year, URL) exactly.
-  - Include an IMDb URL for each prequel/sequel recommendation.
-
-Step 2: Recommend Similar Titles
-
-Once prequels and sequels are listed, recommend up to 10 similar titles based on the following:
- - Genre Similarity:
-  - The recommendations must align closely with the genre(s) of the original movie/series.
- - Thematic and Stylistic Similarity:
-  - Consider deeper connections such as shared themes (e.g., revenge, survival) or style (e.g., humor, dark tone).
- - Industry Consistency:
-  - Only recommend titles from the same industry (e.g., Hollywood for Hollywood films, Bollywood for Bollywood movies,
-  Lollywood for Lollywood movies, and Kollywood for Kollywood).
-
- - Shared Personnel:
-  - Prioritize media featuring the same cast, director, or production studio.
-Step 3: Ranking the Recommendations
-- Rank recommended titles based on relevance, using the following criteria:
-  - Genre and thematic alignment with the original movie.
-  - IMDb ratings, popularity (box office, viewership), and critical reception.
-  - Cast/Director Matches: Movies with shared actors or directors should rank higher.
-Step 4: Ensure Audience Relevance
-- Match the recommendation to the audience demographics:
-  - Take into account IMDb's content rating (e.g., PG, R) to ensure suitability for the original audience.
-  - Focus on recommendations that fit the intended audience (family-friendly, mature content, etc.).
-  
-Step 5: IMDb URL Accuracy
+- If the identified media is part of a franchise, **list the prequels and sequels** (if available) in the correct viewing 
+order before other recommendations.
+- After listing sequels/prequels, provide a list of 10 similar media titles based on genre, cast, or director.
+- Provide a list of 10 similar media titles, focusing on genre, cast, or director.
+- Ensure that Recommendations are based on the Indusotries of the media. 
+  - If Media is Hollwood then the recommendations must be from Hollowwood.
+  - If Media is Bollywood then the recommendations must be from Bollywood.
+  - If Media is Lollywood then the recommendations must be from Lollywood.
+- For each recommendation, include:
+  - The title
+  - IMDb URL
+- Ensure recommendations are relevant to the media identified.
+** IMDb URL Accuracy **
 - Ensure each recommendation includes a valid IMDb URL.
 - The URLs must be in the correct format: https://www.imdb.com/title/[IMDb Title ID].
 - Manually verify that all URLs are functional, accurate, and lead to the correct IMDb page.
 - Avoid URLs with extra tracking parameters or broken links.
-
+- Ensure that each IMDb URL is unique and free of duplicates.
+- Ensure that all IMDb URLs point to the correct IMDb page.
 
 Advanced Matching Techniques:
 1. Deep Genre Matching:

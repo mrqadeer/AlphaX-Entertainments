@@ -1,11 +1,13 @@
 import pathlib
+import ast
 import streamlit as st
 from typing import Optional
 from components.input_components import get_video_prompt
 from helpers.utils import save_video
 from src.video_processing import extract_frames, combine_frames_in_grid
-
-
+from helpers.utils import read_image
+from components.display_components import display_recognition_result, display_recommendation_result
+from src.api_handlers import get_recognition_response, get_recommendation_response
 def video_handler() -> None:
     """
     Handle video input, extract frames, and combine them into a grid.
@@ -44,11 +46,23 @@ def video_handler() -> None:
                 combined_image_path = output_path / 'combined.png'
                 
                 # Combine the frames into a grid and save the result
-                combine_frames_in_grid(frames, combined_image_path)
+                image_path=combine_frames_in_grid(frames, combined_image_path)
+                image = read_image(image_path=image_path)
                 
-                # Optionally, display the combined image
-                with st.expander("Combined Frames Preview:"):
-                    st.image(combined_image_path, use_column_width=True)
+                # Get recognition response
+                recognition_data = get_recognition_response(input_data=image, input_type="image")
+                recognition_data = ast.literal_eval(recognition_data)
+
+                # Check for errors in recognition response
+                if 'error' not in recognition_data:
+                    display_recognition_result(recognition_data)
+                    
+                    # Get recommendation response and display it
+                    recommendation_data = get_recommendation_response(str(recognition_data))
+                    display_recommendation_result(recommendation_data)
+                else:
+                    st.error("Couldn't process your request. Please try again later.")
+        
         
         except Exception as e:
             st.error(f"An error occurred during video processing: {e}")
