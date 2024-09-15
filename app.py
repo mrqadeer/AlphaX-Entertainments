@@ -27,6 +27,17 @@ st.set_page_config(
 
 
 def load_css(file_name):
+    """Load a CSS file and inject it into the Streamlit app.
+
+    Parameters
+    ----------
+    file_name : str
+        The path to the CSS file to load.
+
+    Returns
+    -------
+    None
+    """
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
@@ -37,6 +48,17 @@ load_css("static/style.css")
 
 def main():
 
+    """
+    Main function of the streamlit app. This function renders the main interface of the app.
+
+    The interface has a sidebar with two options: "Home" and "Try Now AlphaX". If the user selects "Home", a form is displayed to enter credentials. If the user selects "Try Now AlphaX", the app displays a subheader with the username and a menu with four options: Text, Image, Audio and Video. Depending on the user's choice, a different handler function is called to process the user's input.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     st.title("AlphaX Entertainments")
 
     with st.sidebar:

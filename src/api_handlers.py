@@ -116,8 +116,6 @@ class LLMHandler:
             st.error("Internal Server Error: Something went wrong on OpenAI's side.")
         elif isinstance(error, ConflictError):
             st.error("Conflict Error: The request conflicts with the current state.")
-        elif isinstance(error, NotFoundError):
-            st.error("Not Found Error: The requested resource was not found.")
         elif isinstance(error, APIStatusError):
             st.error("API Status Error: There is an issue with the API status.")
         elif isinstance(error, PermissionDeniedError):
