@@ -62,13 +62,14 @@ def main():
 
     with st.sidebar:
         selected = option_menu(
-            menu_title='Menu',
+            menu_title='AlphaX Entertainments',
+            
             options=["Home","Credentials", "Try AlphaX"],
             icons=["house","key", "robot"],
-            menu_icon="cast",
+            menu_icon="None",
             default_index=0,
             styles={
-                "menu-title": {"color": 'green', "font-size": "26px"},
+                "menu-title": {"color": 'yellow', "font-size": "16px"},
                 "container": {"padding": "15!important", "background-color": 'black'},
                 "icon": {"color": "white ", "font-size": "20px"},
                 "nav-link": {"color": "white", "font-size": "20px", 'font-weight': 'bold',
@@ -79,6 +80,7 @@ def main():
         )
 
     if selected == "Home":
+    
         display_home_content()
     elif selected == "Credentials":
         st.markdown("""
@@ -119,7 +121,19 @@ def main():
             video_handler()
         else:
             st.write("Please select a valid option")
+    
+ 
 
+    # Footer HTML and CSS
+    footer = """
+        <div class="footer">
+            <p>© 2024 Qadeer Ahmad. All Rights Reserved. 
+            <a href="https://github.com/mrqadeer" target="_blank">Portfolio</a></p>
+        </div>
+    """
+
+    # Add the footer to the app
+    st.markdown(footer, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()

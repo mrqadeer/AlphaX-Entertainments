@@ -30,7 +30,7 @@ def get_credentials() -> bool:
         st.session_state['signed_in'] = True
     else:
         st.session_state['signed_in'] = False
-    cols=st.columns([5, 6, 3])
+    cols=st.columns([5, 4.5, 3])
     with cols[1]:
         submit = st.button("Submit", disabled=not st.session_state['signed_in'], key="sign_in")
     if submit:

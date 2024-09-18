@@ -20,7 +20,7 @@ load_dotenv()
 # Constants
 class LLMHandler:
     def __init__(self, model: str, temperature: float = 0.7, max_tokens: int = 2000, 
-                 max_retries: int = 3, timeout: int = 60, api_key: Optional[str] = None):
+                 max_retries: int = 3, timeout: int = 60):
         """
         Initialize an LLMHandler instance with the given model, temperature, max_tokens, max_retries, timeout, and api_key.
         
@@ -89,6 +89,7 @@ class LLMHandler:
         except Exception as e:
             st.error(f"Error handling response: {e}")
             raise e
+
     def handle_openai_error(self, error: Exception):
         """
         Handle errors from OpenAI.
