@@ -25,10 +25,11 @@ def video_handler() -> None:
     # Preview the uploaded video
     with st.expander("Preview:"):
         st.video(uploaded_file)
-    
-    # Submit button to process the video
-    submit: bool = st.button("Submit")
-    
+    cols=st.columns(5)
+    with cols[2]:
+        # Submit button to process the video
+        submit: bool = st.button("Submit")
+        
     if submit:
         try:
             with st.spinner("In progress..."):

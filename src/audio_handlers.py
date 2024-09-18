@@ -21,9 +21,10 @@ def audio_handler() -> Optional[None]:
 
         if not prompt_audio:
             raise ValueError("No audio input provided.")
-
-        # Render the submit button
-        submit: bool = st.button("Submit", key="audio")
+        cols=st.columns(5)
+        with cols[2]:
+            # Render the submit button
+            submit: bool = st.button("Submit", key="audio")
 
         # Only proceed if the submit button is clicked and valid audio input is available
         if submit:

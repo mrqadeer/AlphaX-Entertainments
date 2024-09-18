@@ -1,14 +1,17 @@
 import streamlit as st
-from streamlit_mic_recorder import speech_to_text
 import time
+from streamlit_mic_recorder import speech_to_text
 from typing import Tuple, Union, Optional
-
+from helpers.save_crendentials import save_credentials
 
 # Initialize session state if not already set
 if 'username' not in st.session_state:
     st.session_state['username'] = 'Qadeer'
-
-
+if 'openai_api_key' not in st.session_state:
+    st.session_state['openai_api_key'] = None
+if 'signed_in' not in st.session_state:
+    st.session_state['signed_in'] = False
+@st.dialog("Sign In to get touch in AlphaX Entertainments")
 def get_credentials() -> bool:
     """
     Get API credentials from the user and save them to a .env file.
@@ -16,33 +19,27 @@ def get_credentials() -> bool:
     Returns:
         bool: True if credentials were successfully saved, False otherwise.
     """
-    st.subheader("Enter your credentials")
-    cols = st.columns(4)
     
-    with cols[0]:
-        username = st.text_input("Username")
-    with cols[1]:
-        google_api_key = st.text_input("GOOGLE_API_KEY", type="password")
-    with cols[2]:
-        openai_api_key = st.text_input("OPENAI_API_KEY", type="password")
-    with cols[3]:
-        assymbly_api_key = st.text_input("Assymbly API Key", type="password")
     
-    submit = st.button("Submit")
+    st.session_state['username'] = st.text_input("Username")
+    st.session_state['openai_api_key'] = st.text_input("OPENAI_API_KEY", type="password")
     
-    if username and google_api_key and openai_api_key and assymbly_api_key and submit:
-        # Write to .env file
-        st.session_state['username'] = username
-        with open(".env", "w") as f:
-            f.write(f"GOOGLE_API_KEY='{google_api_key}'\n")
-            f.write(f"OPENAI_API_KEY='{openai_api_key}'\n")
-            f.write(f"ASSYMBLY_API_KEY='{assymbly_api_key}'\n")
-        st.success("Credentials saved successfully!")
-        return True
+    
+    
+    if st.session_state['username'] and st.session_state['openai_api_key'] :
+        st.session_state['signed_in'] = True
     else:
-        st.error("Please enter all credentials.")
-        return False
+        st.session_state['signed_in'] = False
+    cols=st.columns([5, 6, 3])
+    with cols[1]:
+        submit = st.button("Submit", disabled=not st.session_state['signed_in'], key="sign_in")
+    if submit:
+        if save_credentials(st.session_state['openai_api_key']):
+            st.success(f"Nice to have you {st.session_state['username'].title()}!")
+        else:
+            st.error("Error saving credentials.")
 
+    return st.session_state['signed_in']
 
 def get_choice() -> str:
     """

@@ -108,7 +108,7 @@ h1 {
 }
 
 
-<<<<<<< HEAD
+
 /* General styling */
 .feature-area {
     padding: 50px 0;
@@ -195,11 +195,96 @@ h1 {
 .st-emotion-cache-ubko3j.e1nzilvr4{
     visibility: hidden;
 }
-=======
+
 .stAppViewMain.main.st-emotion-cache-bm2z3a.ea3mdgi8 {
     background-color: #0E1117;
 }
 .st-emotion-cache-12fmjuu.ezrtsby2 {
     background-color: #0E1117;
 }
->>>>>>> e9f1d93dddb1174346b40ff30053ab75ca487124
+
+#credentials {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    background-color: #29292d;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
+
+}
+
+/* Heading Style */
+.api-key {
+    font-family: 'Arial', sans-serif;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2.api-key {
+    font-size: 28px;
+    font-weight: 600;
+    color: #dad603;
+}
+
+/* Paragraph Style */
+p.api-key {
+    font-size: 16px;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+/* Button Style */
+.submit-btn {
+    background-color: #1e90ff;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Anchor tag (link) style */
+a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Button - Default state */
+.st-emotion-cache-15hul6a.ef3psqc13 {
+    color: green;
+    border-color: yellow;
+    transition: all 0.3s ease-in-out;
+    width: 50%;
+    margin-top: 10px;
+}
+
+/* Button - Hover effect */
+.st-emotion-cache-15hul6a.ef3psqc13:hover:enabled {
+    color: blueviolet;
+    transform: scale(1.05); /* "scale" instead of "scale" property to make it work properly */
+    border-color: yellow;
+    transition: all 0.3s ease-in-out;
+    width: 50%;
+}
+
+/* Disabled button - No hover effect */
+.st-emotion-cache-15hul6a.ef3psqc12:disabled {
+    color: grey;
+    border-color: grey;
+    cursor: not-allowed; /* Visual cue for disabled state */
+    pointer-events: none; /* Disable hover */
+}

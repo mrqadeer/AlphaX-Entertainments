@@ -45,7 +45,6 @@ def load_css(file_name):
 load_css("static/style.css")
 # Main function
 
-
 def main():
 
     """
@@ -64,8 +63,8 @@ def main():
     with st.sidebar:
         selected = option_menu(
             menu_title='Menu',
-            options=["Home","Credentials", "Try Now AlphaX"],
-            icons=["house","key", "book"],
+            options=["Home","Credentials", "Try AlphaX"],
+            icons=["house","key", "robot"],
             menu_icon="cast",
             default_index=0,
             styles={
@@ -82,11 +81,22 @@ def main():
     if selected == "Home":
         display_home_content()
     elif selected == "Credentials":
-        if get_credentials():
-            st.session_state['credential_flag'] = True
+        st.markdown("""
+        <div class="container" style="text-align: center;" id="credentials">
+                <h2 class='api-key'>OpenAI API Key Setup</h2>
+                    <p class='api-key'>To use this app, you need to create an OpenAI API key. Visit the OpenAI website, generate your key, and submit it here.</p>
+                    <p class='api-key'>Click <a href="https://platform.openai.com/account/api-keys" target="_blank">here</a> to create your OpenAI API key.</p>
+        </div>
+                    """,unsafe_allow_html=True)
+        cols = st.columns([4, 3, 2.5])
+        with cols[1]:
+            submit = st.button("Submit",key="submit")
+            if submit:
+                if get_credentials():
+                    st.session_state['signed_in'] = True
 
-    elif selected == "Try Now AlphaX":
-        if not st.session_state['credential_flag']:
+    elif selected == "Try AlphaX":
+        if not st.session_state['signed_in']:
             st.subheader(
                 "Please enter your credentials to access AlphaX Entertainments")
             st.stop()
