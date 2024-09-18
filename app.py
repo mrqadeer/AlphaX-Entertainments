@@ -7,7 +7,7 @@ from streamlit_option_menu import option_menu
 from components.input_components import (get_credentials,
                                          get_choice)
 
-
+from components.display_components import display_home_content
 from src.text_handlers import text_handler
 
 
@@ -64,8 +64,8 @@ def main():
     with st.sidebar:
         selected = option_menu(
             menu_title='Menu',
-            options=["Home", "Try Now AlphaX"],
-            icons=["house", "book"],
+            options=["Home","Credentials", "Try Now AlphaX"],
+            icons=["house","key", "book"],
             menu_icon="cast",
             default_index=0,
             styles={
@@ -80,6 +80,8 @@ def main():
         )
 
     if selected == "Home":
+        display_home_content()
+    elif selected == "Credentials":
         if get_credentials():
             st.session_state['credential_flag'] = True
 

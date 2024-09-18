@@ -106,3 +106,91 @@ h1 {
     border: none;
     margin: 20px 0;
 }
+
+
+/* General styling */
+.feature-area {
+    padding: 50px 0;
+    background-color: #f5f5f5;
+}
+/* Home page cards */
+.single-feature {
+    background-color: #fff; /* Light background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #333; /* Dark text */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+    border: 2px solid transparent; /* Default transparent border */
+    width: 100%; /* Allow the grid to control the width */
+    height: 200px; /* Fixed height */
+    overflow: hidden; /* Prevent content from spilling */
+    box-sizing: border-box;
+    display: block; /* Prevent flexbox for spacing */
+}
+
+/* Title and Image */
+
+.single-feature h4 {
+    margin: -18px 0px;
+    font-size: 26px;
+    display: flow-root;
+    color: #000000;
+}
+/* Icon styling */
+.single-feature .title figure svg {
+    width: 30px;
+    height: 30px;
+    margin-right: 2px;
+    margin: -14px;
+    float: left; /* Keep the image and title on the same line */
+    fill: blueviolet;
+}
+
+/* Card text */
+.single-feature p {
+    color: #666;
+    font-size: 14px;
+    margin-top: 15px; /* Adjust margin for spacing below title */
+    line-height: 1.6; /* Better line height for readability */
+    text-align: left; /* Ensure text aligns to the left */
+}
+
+/* Hover effect with a glowing border */
+.single-feature:hover {
+    transform: scale(1.05); /* Zoom-in effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    border: 2px solid yellow; /* Glowing border */
+}
+
+.container {
+    padding-left: 30px; /* Add some padding to the left */
+    padding-right: 30px; /* Add some padding to the right */
+}
+
+/* Heading (h2) styling */
+h2 {
+    font-size: 26px; /* Adjust font size */
+    text-align: center; /* Center the heading */
+    white-space: nowrap; 
+    overflow: hidden; 
+    font:'Poppins';
+    margin-bottom: 20px; /* Spacing between heading and content */
+    text-wrap:wrap;
+}
+
+h1 {
+    font-size: 28px; /* Adjust font size */
+    text-align: left; /* Center the heading */
+    white-space: nowrap; 
+    overflow: hidden; 
+    font:'Poppins';
+    margin-bottom: 10px; /* Spacing between heading and content */
+    color: yellow;
+}
+
+
+.st-emotion-cache-ubko3j.e1nzilvr4{
+    visibility: hidden;
+}
