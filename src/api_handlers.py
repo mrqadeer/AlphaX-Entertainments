@@ -37,7 +37,7 @@ class LLMHandler:
         self.max_tokens = max_tokens
         self.max_retries = max_retries
         self.timeout = timeout
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.api_key = os.getenv("OPENAI_API_KEY")
         self.llm_instance = self.get_llm_instance()
         
     def get_llm_instance(self) -> Optional[ChatOpenAI]:
@@ -116,8 +116,7 @@ class LLMHandler:
             st.error("Internal Server Error: Something went wrong on OpenAI's side.")
         elif isinstance(error, ConflictError):
             st.error("Conflict Error: The request conflicts with the current state.")
-        elif isinstance(error, APIStatusError):
-            st.error("API Status Error: There is an issue with the API status.")
+
         elif isinstance(error, PermissionDeniedError):
             st.error("Permission Denied Error: You do not have permission to perform this action.")
         elif isinstance(error, LengthFinishReasonError):

@@ -73,7 +73,7 @@ def main():
                 "container": {"padding": "15!important", "background-color": 'black'},
                 "icon": {"color": "white ", "font-size": "20px"},
                 "nav-link": {"color": "white", "font-size": "20px", 'font-weight': 'bold',
-                             "text-align": "left", "margin": "0px",
+                             "text-align": "left", "margin": "5px", "padding": "10px",
                              "--hover-color": "magenta"},
                 "nav-link-selected": {"background-color": "#02ab21"}
             }
