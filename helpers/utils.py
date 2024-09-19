@@ -12,7 +12,7 @@ VIDEO_SAVE_FOLDER = 'data/video'
 DEFAULT_IMAGE = pathlib.Path(IMAGE_SAVE_FOLDER, 'default.png')
 
 # Function to ensure directories exist
-def ensure_directories():
+def ensure_directories()->None:
     """
     Ensure that the directories for saving images and videos exist.
 
@@ -27,6 +27,9 @@ def ensure_directories():
     Returns
     -------
     None
+    Example:
+        >>> ensure_directories()
+        # Directories are created if they don't exist
     """
     pathlib.Path(IMAGE_SAVE_FOLDER).mkdir(parents=True, exist_ok=True)
     pathlib.Path(VIDEO_SAVE_FOLDER).mkdir(parents=True, exist_ok=True)
@@ -36,15 +39,17 @@ def save_image(uploaded_image):
     """
     Save an uploaded image to the server.
 
-    Parameters
-    ----------
-    uploaded_image : UploadedFile
-        The image to be saved.
+    This function saves the provided image file to a predefined folder.
 
-    Returns
-    -------
-    str
-        The path to the saved image.
+    Args:
+        uploaded_image (UploadedFile): The image file to be saved.
+
+    Returns:
+        str: The path to the saved image.
+
+    Example:
+        >>> save_image(uploaded_image)
+        'data/images/uploaded_image.png'
     """
     ensure_directories()
     image_path = os.path.join(IMAGE_SAVE_FOLDER, uploaded_image.name)
@@ -57,15 +62,17 @@ def save_video(uploaded_file):
     """
     Save an uploaded video to the server.
 
-    Parameters
-    ----------
-    uploaded_file : UploadedFile
-        The video to be saved.
+    This function saves the provided video file to a predefined folder.
 
-    Returns
-    -------
-    str
-        The path to the saved video.
+    Args:
+        uploaded_file (UploadedFile): The video file to be saved.
+
+    Returns:
+        str: The path to the saved video, or None if an error occurred.
+
+    Example:
+        >>> save_video(uploaded_file)
+        'data/video/uploaded_video.mp4'
     """
     ensure_directories()
     video_path = pathlib.Path(VIDEO_SAVE_FOLDER, uploaded_file.name)
@@ -82,15 +89,18 @@ def download_image(url):
     """
     Download an image from a URL and save it to the server.
 
-    Parameters
-    ----------
-    url : str
-        The URL of the image to download.
+    This function downloads an image from the specified URL and saves it to a
+    predefined folder. If the download fails, a default image is used.
 
-    Returns
-    -------
-    str
-        The path to the saved image.
+    Args:
+        url (str): The URL of the image to download.
+
+    Returns:
+        str: The path to the saved image, or the path to the default image if an error occurred.
+
+    Example:
+        >>> download_image("https://example.com/image.png")
+        'data/images/downloaded.png'
     """
     ensure_directories()
     image_path = os.path.join(IMAGE_SAVE_FOLDER, 'downloaded.png')
@@ -115,17 +125,20 @@ def download_image(url):
 # Function to get the image URL from IMDb
 def get_image_url(imdb_url):
     """
-    Get the image URL from an IMDb page.
+    Retrieve the image URL from an IMDb page.
 
-    Parameters
-    ----------
-    imdb_url : str
-        The URL of the IMDb page to retrieve the image from.
+    This function extracts the URL of the image from the IMDb page specified by
+    the provided URL. If the extraction fails, a default image path is returned.
 
-    Returns
-    -------
-    str
-        The URL of the image or the default image path if the request fails.
+    Args:
+        imdb_url (str): The URL of the IMDb page to retrieve the image from.
+
+    Returns:
+        str: The URL of the image, or the path to the default image if an error occurred.
+
+    Example:
+        >>> get_image_url("https://www.imdb.com/title/tt1234567/")
+        'https://example.com/image.png'
     """
     try:
         response = requests.get(imdb_url, headers=HEADERS, timeout=20)
@@ -141,24 +154,24 @@ def get_image_url(imdb_url):
 # Function to read an image and encode it in base64
 def read_image(image_path):
     """
-    Read an image and encode it in base64.
+    Read an image file and encode it in base64.
 
-    Parameters
-    ----------
-    image_path : str
-        The path to the image file.
+    This function reads an image file from the specified path and encodes it as
+    a base64 string.
 
-    Returns
-    -------
-    str
-        The base64 encoded image data.
+    Args:
+        image_path (str): The path to the image file.
 
-    Raises
-    ------
-    FileNotFoundError
-        If the image file does not exist.
-    Exception
-        If there is an error reading the file.
+    Returns:
+        str: The base64 encoded image data.
+
+    Raises:
+        FileNotFoundError: If the image file does not exist.
+        Exception: For other errors encountered while reading the file.
+
+    Example:
+        >>> read_image("data/images/sample.png")
+        'iVBORw0KGgoAAAANSUhEUgAAAAUA...'
     """
     if not os.path.exists(image_path):
         raise FileNotFoundError(f"The file at {image_path} does not exist.")
@@ -170,24 +183,22 @@ def read_image(image_path):
         raise e  # Let the exception propagate for debugging
 
 # Function to validate the size of an audio file
-def validate_audio_file(uploaded_file):
+def validate_audio_file(uploaded_file)->bool:
     """
     Validate the size of an uploaded audio file.
 
-    Parameters
-    ----------
-    uploaded_file : st.uploaded_file_manager.UploadedFile
-        The uploaded audio file.
+    This function checks if the size of the uploaded audio file is within the
+    allowed limit (4 MB).
 
-    Returns
-    -------
-    bool
-        True if the file size is less than or equal to 4 MB, False otherwise.
+    Args:
+        uploaded_file (st.uploaded_file_manager.UploadedFile): The uploaded audio file.
 
-    Raises
-    ------
-    ValueError
-        If the uploaded file is not an audio file.
+    Returns:
+        bool: True if the file size is less than or equal to 4 MB, False otherwise.
+
+    Example:
+        >>> validate_audio_file(uploaded_file)
+        True
     """
     
     file_size_mb = uploaded_file.size / (1024 * 1024)  # Convert bytes to MB

@@ -1,5 +1,5 @@
 from setuptools import find_packages, setup
-
+import os
 from typing import List
 
 HYPEN_E_DOT='-e .'
@@ -7,6 +7,7 @@ def get_requirements(file_path:str)->List[str]:
     '''
     this function will return the list of requirements
     '''
+    file_path = os.path.join(os.path.dirname(__file__), file_path)
     requirements=[]
     with open(file_path) as file_obj:
         requirements=file_obj.readlines()
@@ -16,6 +17,8 @@ def get_requirements(file_path:str)->List[str]:
             requirements.remove(HYPEN_E_DOT)
     
     return requirements
+
+
 setup(
     name='alphax-entertainments',
     version='1.1.1',

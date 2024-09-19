@@ -2,7 +2,7 @@ import streamlit as st
 import time
 from streamlit_mic_recorder import speech_to_text
 from typing import Tuple, Union, Optional
-from helpers.save_crendentials import save_credentials
+from helpers.save_credentials import save_credentials
 
 # Initialize session state if not already set
 if 'username' not in st.session_state:

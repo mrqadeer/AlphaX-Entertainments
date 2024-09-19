@@ -1,8 +1,7 @@
-import requests
-import ast
+import os
+import pathlib
 import streamlit as st
-from PIL import Image
-from io import BytesIO
+
 from streamlit_option_menu import option_menu
 from components.input_components import (get_credentials,
                                          get_choice)
@@ -24,6 +23,7 @@ st.set_page_config(
 # Load custom CSS
 
 
+
 def load_css(file_name):
     """Load a CSS file and inject it into the Streamlit app.
 
@@ -36,11 +36,14 @@ def load_css(file_name):
     -------
     None
     """
-    with open(file_name) as f:
+    # Ensure it works no matter where it's called from
+    file_path = os.path.join(os.path.dirname(__file__), 'static', file_name)
+    file_path = pathlib.Path(file_path)
+    with open(file_path) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
-load_css("static/style.css")
+load_css("style.css")
 # Main function
 
 def main():
