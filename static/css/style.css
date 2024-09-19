@@ -153,12 +153,12 @@ h1 {
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     border-radius: 10px; /* Smooth rounded corners */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+    transition: transform 0.3s ease  box-shadow 0.3s ease !important; /* Smooth transition for hover effects */
 }
 
 /* Hover effect for the logo */
 .stLogo.st-emotion-cache-1xawmls.eczjsme7:hover {
-    transform: scale(1.1); /* Slight zoom effect on hover */
+    transform: scale(1.1) !important; /* Slight zoom effect on hover */
     box-shadow: 0px 4px 15px rgba(242, 255, 0, 0.3); /* Subtle shadow effect to make the logo pop */
 }
 
