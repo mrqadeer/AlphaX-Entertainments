@@ -4,14 +4,11 @@ Welcome to the Hugging Face Model Showcase app! This app demonstrates the power 
 ## Deployment
 ### On Streamlit Cloud
 Check it out [AlphaX Entertainments](https://alphax-entertainments.streamlit.app/)
-### On Render
-Check it out [AlphaX Entertainments](https://alphax-entertainments.streamlit.app/)
 ## Table of Contents
 
 - [AlphaX Entertainments](#alphax-entertainments)
   - [Deployment](#deployment)
     - [On Streamlit Cloud](#on-streamlit-cloud)
-    - [On Render](#on-render)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage](#usage)
