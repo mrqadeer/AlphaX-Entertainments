@@ -3,9 +3,9 @@
 Welcome to the Hugging Face Model Showcase app! This app demonstrates the power and versatility of Hugging Face models across multiple domains, including NLP, Audio, Computer Vision and Multimodal. The app utilizes models offering serverless APIs for seamless responses.
 ## Deployment
 ### On Streamlit Cloud
-Check it out [AlphaX Entertainments](https://hugging-face-models-apps-qrtn5wius38afgfqghjats.streamlit.app/)
+Check it out [AlphaX Entertainments](https://alphax-entertainments.streamlit.app/)
 ### On Render
-Check it out [AlphaX Entertainments](https://hugging-face-models-apps.onrender.com/)
+Check it out [AlphaX Entertainments](https://alphax-entertainments.streamlit.app/)
 ## Table of Contents
 
 - [AlphaX Entertainments](#alphax-entertainments)
@@ -16,6 +16,7 @@ Check it out [AlphaX Entertainments](https://hugging-face-models-apps.onrender.c
   - [Installation](#installation)
   - [Usage](#usage)
   - [Features](#features)
+    - [Limitations](#limitations)
   - [Contributing](#contributing)
       - [Documenation](#documenation)
   - [License](#license)
@@ -67,7 +68,7 @@ to access the app.
 1. Provide OpenAI API Key to get your access key follow the link [OpenAI API Key](https://platform.openai.com/account/api-keys)
 2. Close the Sign In dialog and navigate to ```Try AlphaX``` 
 3. Select the desired option and click on ```Try AlphaX```
-
+- **Note**: You need to have OpenAI API key which provides you access to the model ```gpt-4o```
 ## Features
 - **Text Processing**: Analyze and manipulate text inputs.
 - **Image Handling**: Upload and process images for recognition tasks.
@@ -75,12 +76,16 @@ to access the app.
 - **Video Processing**: Handle video inputs with functionality for analysis and recognition.
 - **User-Friendly Interface**: Built with Streamlit for easy navigation and usage.
 
-
+### Limitations
+- Poor respose for Lollywood Media.
+- Needs to improve by fine tuning model.
 ## Contributing
 
 We welcome contributions! Please read [Contribution](CONTRIBUTE.md) file for more detail.
 
 #### Documenation
 For documentation, please refer to the [AlphaX Entertainments Documentation](https://mrqadeer.github.io/AlphaX-Entertainments/index.html)
+
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

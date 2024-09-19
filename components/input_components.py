@@ -9,8 +9,7 @@ if 'username' not in st.session_state:
     st.session_state['username'] = 'Qadeer'
 if 'openai_api_key' not in st.session_state:
     st.session_state['openai_api_key'] = None
-if 'signed_in' not in st.session_state:
-    st.session_state['signed_in'] = False
+
 @st.dialog("Sign In to get touch in AlphaX Entertainments")
 def get_credentials() -> bool:
     """

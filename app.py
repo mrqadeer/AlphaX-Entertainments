@@ -20,10 +20,10 @@ from src.video_handlers import video_handler
 st.set_page_config(
     layout="wide", page_title="AlphaX Entertainments", page_icon=":cinema:")
 
+if 'signed_in' not in st.session_state:
+    st.session_state['signed_in'] = False
+
 # Load custom CSS
-
-
-
 def load_css(file_name):
     """Load a CSS file and inject it into the Streamlit app.
 
