@@ -25,8 +25,8 @@ def video_handler() -> None:
     # Preview the uploaded video
     with st.expander("Preview:"):
         st.video(uploaded_file)
-    cols=st.columns(5)
-    with cols[2]:
+    cols=st.columns([5, 6, 2.5], gap="medium")
+    with cols[1]:
         # Submit button to process the video
         submit: bool = st.button("Submit")
         

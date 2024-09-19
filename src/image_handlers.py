@@ -18,8 +18,8 @@ def image_handler() -> None:
     """
     # Get the image prompt (either URL or uploaded file)
     prompt_image, tag = get_image_prompt()
-    cols=st.columns(5)
-    with cols[2]:
+    cols=st.columns([5, 6, 2.5], gap="medium")
+    with cols[1]:
         # Always render the submit button
         submit: bool = st.button("Submit", key="image")
 

@@ -16,8 +16,8 @@ def text_handler() -> Optional[None]:
     APIs, and displays the results in a grid format.
     """
     dialogue: str = get_text_prompt()
-    cols=st.columns(5)
-    with cols[2]:
+    cols=st.columns([5, 6, 2.5], gap="medium")
+    with cols[1]:
         submit: bool = st.button("Submit")
 
     if len(dialogue) > 0 and submit:

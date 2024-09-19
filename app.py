@@ -79,7 +79,7 @@ def main():
                 "nav-link-selected": {"background-color": "#02ab21"}
             }
         )
-
+    st.logo("static/assets/logo/alphax.png")
     if selected == "Home":
     
         display_home_content()
@@ -100,12 +100,26 @@ def main():
 
     elif selected == "Try AlphaX":
         if not st.session_state['signed_in']:
-            st.subheader(
-                "Please enter your credentials to access AlphaX Entertainments")
+            
+            st.markdown(
+                    """
+                    <div class="custom-alert" role="alert">
+                    Please enter your credentials to access AlphaX Entertainments...
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+)
+            
             st.stop()
 
-        st.subheader(
-            f"{st.session_state['username'].title()} Welcome to AlphaX Entertainments")
+        st.markdown(
+    f"""
+    <div class="welcome-text">
+        Dear <span class="username-transition">{st.session_state['username'].title()}</span>, welcome to <span class="username-transition">AlphaX Entertainments</span>!
+    </div>
+    """,
+    unsafe_allow_html=True
+)
         st.markdown("<div class='rainbow-divider'></div>",
                     unsafe_allow_html=True)
         choice = get_choice()
@@ -130,7 +144,7 @@ def main():
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <div class="footer">
-        <p>Connect with us on Social Media</p>
+        <p>Connect with us me Social Media</p>
         <div class="social-icons">
             <a href="https://github.com/mrqadeer" target="_blank"><i class="fab fa-github"></i></a>
             <a href="https://www.linkedin.com/in/qadeer-ahmad-3499a4205/" target="_blank"><i class="fab fa-linkedin"></i></a>

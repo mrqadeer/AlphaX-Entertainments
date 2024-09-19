@@ -101,12 +101,73 @@ h1 {
 
 .rainbow-divider {
     width: 100%;
-    height: 5px;
+    height: 3px;
     background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
     border: none;
     margin: 20px 0;
 }
 
+
+/* welcome user */
+.welcome-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.username-transition {
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 200% 200%;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: gradient-animation 3s ease-in-out , slide-right 1.5s forwards;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes slide-right {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/*  Logo */
+
+/* Styling for the logo in the sidebar */
+.stLogo.st-emotion-cache-1xawmls.eczjsme7 {
+    display: flex; /* Ensure it's centered within a container */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    border-radius: 10px; /* Smooth rounded corners */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for the logo */
+.stLogo.st-emotion-cache-1xawmls.eczjsme7:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+    box-shadow: 0px 4px 15px rgba(242, 255, 0, 0.3); /* Subtle shadow effect to make the logo pop */
+}
+
+/* Logo image or SVG adjustments (optional) */
+.stLogo.st-emotion-cache-1xawmls.eczjsme7 img {
+    max-width: 100%; /* Ensure the logo scales properly */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 5px; /* Optional: rounded corners for the logo image */
+}
 
 
 /* General styling */
@@ -290,6 +351,13 @@ a:hover {
 }
 
 
+.custom-alert {
+    color: white;
+    background-color: rgb(70, 14, 14);
+    padding: 10px;
+    border-radius: 5px;
+}
+
 /* Footer */
 .footer {
     position: fixed;
@@ -307,7 +375,7 @@ a:hover {
 .footer a {
     color: white;
     text-decoration: none;
-    margin: 0 15px;
+    margin: 0 5px;
     font-size: 24px;
 }
 
@@ -316,7 +384,7 @@ a:hover {
 }
 
 .social-icons {
-    margin-top: 10px;
+    margin-top: 2px;
 }
 
 /* Icons with a bit of spacing */
