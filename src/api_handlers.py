@@ -8,14 +8,11 @@ from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from prompts.system_prompts import (RECOMMENDATIONS_PROMPT, RECOGNITION_PROMPT)
 
-from dotenv import load_dotenv
-from openai import (InternalServerError,APIError,ConflictError,NotFoundError,
-                    APIStatusError,RateLimitError,APITimeoutError,BadRequestError,
+from openai import (InternalServerError,APIError,ConflictError,
+                    RateLimitError,APITimeoutError,BadRequestError,
                     APIConnectionError,AuthenticationError,InternalServerError,PermissionDeniedError,
                     LengthFinishReasonError,UnprocessableEntityError,
                     APIResponseValidationError,ContentFilterFinishReasonError)
-# Load environment variables
-load_dotenv()
 
 # Constants
 class LLMHandler:
@@ -30,14 +27,13 @@ class LLMHandler:
             max_tokens (int): The maximum number of tokens to generate. Defaults to 2000.
             max_retries (int): The maximum number of retries to make if the API call fails. Defaults to 3.
             timeout (int): The timeout in seconds for the API call. Defaults to 60.
-            api_key (Optional[str]): The API key to use. If not provided, the API key will be read from the environment variable OPENAI_API_KEY.
         """
         self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.max_retries = max_retries
         self.timeout = timeout
-        self.api_key = os.getenv("OPENAI_API_KEY")
+        self.api_key = st.session_state.get("openai_api_key")
         self.llm_instance = self.get_llm_instance()
         
     def get_llm_instance(self) -> Optional[ChatOpenAI]:
