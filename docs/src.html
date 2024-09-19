@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src package &mdash; AlphaX Movie Recognition and Recommendation System using GenAI 1.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=58fbf978"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="prompts package" href="prompts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AlphaX Movie Recognition and Recommendation System using GenAI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">AlphaX-Entertainments</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html#table-of-contents">Table of Contents</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="app.html">App Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="components.html">components package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="helpers.html">helpers package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="prompts.html">prompts package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">src package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">components package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">helpers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prompts.html">prompts package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">src package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.api_handlers.LLMHandler"><code class="docutils literal notranslate"><span class="pre">LLMHandler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.api_handlers.LLMHandler.get_llm_instance"><code class="docutils literal notranslate"><span class="pre">LLMHandler.get_llm_instance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.api_handlers.LLMHandler.handle_response"><code class="docutils literal notranslate"><span class="pre">LLMHandler.handle_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.api_handlers.LLMHandler.handle_openai_error"><code class="docutils literal notranslate"><span class="pre">LLMHandler.handle_openai_error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.api_handlers.RecognitionHandler"><code class="docutils literal notranslate"><span class="pre">RecognitionHandler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.api_handlers.RecognitionHandler.get_dialogue_response"><code class="docutils literal notranslate"><span class="pre">RecognitionHandler.get_dialogue_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.api_handlers.RecognitionHandler.get_image_response"><code class="docutils literal notranslate"><span class="pre">RecognitionHandler.get_image_response()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.api_handlers.RecommendationHandler"><code class="docutils literal notranslate"><span class="pre">RecommendationHandler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.api_handlers.RecommendationHandler.get_recommendation_response"><code class="docutils literal notranslate"><span class="pre">RecommendationHandler.get_recommendation_response()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.api_handlers.get_recognition_response"><code class="docutils literal notranslate"><span class="pre">get_recognition_response()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.api_handlers.get_recommendation_response"><code class="docutils literal notranslate"><span class="pre">get_recommendation_response()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.audio_handlers.audio_handler"><code class="docutils literal notranslate"><span class="pre">audio_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.audio_processing.audio_processing"><code class="docutils literal notranslate"><span class="pre">audio_processing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.audio_processing.transcribe_audio_to_text"><code class="docutils literal notranslate"><span class="pre">transcribe_audio_to_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.audio_processing.convert_mp3_to_wav"><code class="docutils literal notranslate"><span class="pre">convert_mp3_to_wav()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.image_handlers.image_handler"><code class="docutils literal notranslate"><span class="pre">image_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.text_handlers.text_handler"><code class="docutils literal notranslate"><span class="pre">text_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.video_handlers.video_handler"><code class="docutils literal notranslate"><span class="pre">video_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.video_processing.extract_frames"><code class="docutils literal notranslate"><span class="pre">extract_frames()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.video_processing.combine_frames_in_grid"><code class="docutils literal notranslate"><span class="pre">combine_frames_in_grid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AlphaX Movie Recognition and Recommendation System using GenAI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">AlphaX-Entertainments</a></li>
+      <li class="breadcrumb-item active">src package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-package">
+<h1>src package<a class="headerlink" href="#src-package" title="Link to this heading"></a></h1>
+<p>The <cite>src</cite> package includes various modules for handling and processing different types of media and APIs.</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><span class="xref std std-ref">submodules</span></p></li>
+<li><p><span class="xref std std-ref">module_contents</span></p></li>
+</ul>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<p>The <cite>src</cite> package contains the following submodules:</p>
+<ul>
+<li><p><strong>api_handlers</strong> module</p>
+<dl class="py class" id="module-src.api_handlers">
+<dt class="sig sig-object py" id="src.api_handlers.LLMHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.api_handlers.</span></span><span class="sig-name descname"><span class="pre">LLMHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_retries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/api_handlers.html#LLMHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.LLMHandler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.api_handlers.LLMHandler.get_llm_instance">
+<span class="sig-name descname"><span class="pre">get_llm_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ChatOpenAI</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/api_handlers.html#LLMHandler.get_llm_instance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.LLMHandler.get_llm_instance" title="Link to this definition"></a></dt>
+<dd><p>Create an instance of the Langchain OpenAI chat model with the provided parameters, or return None if an error occurs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created LLM instance, or None if an error occurs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[ChatOpenAI]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.api_handlers.LLMHandler.handle_response">
+<span class="sig-name descname"><span class="pre">handle_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/api_handlers.html#LLMHandler.handle_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.LLMHandler.handle_response" title="Link to this definition"></a></dt>
+<dd><p>Handle the response from the LLM instance, including any errors that may occur.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>messages</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – The messages to send to the LLM instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the LLM instance, or an error message if an error occurs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the LLM instance is not created.</p></li>
+<li><p><strong>Exception</strong> – If any other error occurs.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.api_handlers.LLMHandler.handle_openai_error">
+<span class="sig-name descname"><span class="pre">handle_openai_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Exception</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/api_handlers.html#LLMHandler.handle_openai_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.LLMHandler.handle_openai_error" title="Link to this definition"></a></dt>
+<dd><p>Handle errors from OpenAI.</p>
+<p>This method handles errors that occur when invoking the LLM instance.
+It displays an error message to the user based on the type of error that occurred.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error</strong> (<em>Exception</em>) – The error that occurred.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the LLM instance is not created.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.api_handlers.RecognitionHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.api_handlers.</span></span><span class="sig-name descname"><span class="pre">RecognitionHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gpt-4o'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/api_handlers.html#RecognitionHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.RecognitionHandler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.api_handlers.LLMHandler" title="src.api_handlers.LLMHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMHandler</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.api_handlers.RecognitionHandler.get_dialogue_response">
+<span class="sig-name descname"><span class="pre">get_dialogue_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialogue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/api_handlers.html#RecognitionHandler.get_dialogue_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.RecognitionHandler.get_dialogue_response" title="Link to this definition"></a></dt>
+<dd><p>Get the response from the LLM given a dialogue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dialogue</strong> (<em>str</em>) – The dialogue to get the response for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the LLM.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.api_handlers.RecognitionHandler.get_image_response">
+<span class="sig-name descname"><span class="pre">get_image_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/api_handlers.html#RecognitionHandler.get_image_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.RecognitionHandler.get_image_response" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.api_handlers.RecommendationHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.api_handlers.</span></span><span class="sig-name descname"><span class="pre">RecommendationHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gpt-4o'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/api_handlers.html#RecommendationHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.RecommendationHandler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.api_handlers.LLMHandler" title="src.api_handlers.LLMHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMHandler</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.api_handlers.RecommendationHandler.get_recommendation_response">
+<span class="sig-name descname"><span class="pre">get_recommendation_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/src/api_handlers.html#RecommendationHandler.get_recommendation_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.RecommendationHandler.get_recommendation_response" title="Link to this definition"></a></dt>
+<dd><p>Get a recommendation response for a given input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_data</strong> (<em>str</em>) – The input data to generate recommendations for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The recommendation response in JSON format.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If there is an error parsing the recommendations response.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.api_handlers.get_recognition_response">
+<span class="sig-prename descclassname"><span class="pre">src.api_handlers.</span></span><span class="sig-name descname"><span class="pre">get_recognition_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dialogue'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/api_handlers.html#get_recognition_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.get_recognition_response" title="Link to this definition"></a></dt>
+<dd><p>Get a recognition response for a given input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_data</strong> (<em>str</em>) – The input data to generate recognition for.</p></li>
+<li><p><strong>input_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The type of input data. Defaults to “dialogue”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The recognition response in JSON format, or None if there is an error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If there is an error generating recognition response.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.api_handlers.get_recommendation_response">
+<span class="sig-prename descclassname"><span class="pre">src.api_handlers.</span></span><span class="sig-name descname"><span class="pre">get_recommendation_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/api_handlers.html#get_recommendation_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.api_handlers.get_recommendation_response" title="Link to this definition"></a></dt>
+<dd><p>Get a recommendation response for a given input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_data</strong> (<em>str</em>) – The input data to generate recommendations for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The recommendation response in JSON format, or None if there is an error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If there is an error generating recommendations response.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</li>
+<li><p><strong>audio_handlers</strong> module</p>
+<dl class="py function" id="module-src.audio_handlers">
+<dt class="sig sig-object py" id="src.audio_handlers.audio_handler">
+<span class="sig-prename descclassname"><span class="pre">src.audio_handlers.</span></span><span class="sig-name descname"><span class="pre">audio_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/audio_handlers.html#audio_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.audio_handlers.audio_handler" title="Link to this definition"></a></dt>
+<dd><p>Handles audio input (either via URL or uploaded file) for dialogue recognition and recommendation.</p>
+<p>Displays a preview of the audio file and performs transcription, recognition, and recommendation processing.</p>
+</dd></dl>
+
+</li>
+<li><p><strong>audio_processing</strong> module</p>
+<dl class="py function" id="module-src.audio_processing">
+<dt class="sig sig-object py" id="src.audio_processing.audio_processing">
+<span class="sig-prename descclassname"><span class="pre">src.audio_processing.</span></span><span class="sig-name descname"><span class="pre">audio_processing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploaded_file</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/audio_processing.html#audio_processing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.audio_processing.audio_processing" title="Link to this definition"></a></dt>
+<dd><p>Process an uploaded audio file and return its path in WAV format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>uploaded_file</strong> (<em>st.uploaded_file_manager.UploadedFile</em>) – The uploaded audio file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the processed WAV file or None if an error occurs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.audio_processing.transcribe_audio_to_text">
+<span class="sig-prename descclassname"><span class="pre">src.audio_processing.</span></span><span class="sig-name descname"><span class="pre">transcribe_audio_to_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/audio_processing.html#transcribe_audio_to_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.audio_processing.transcribe_audio_to_text" title="Link to this definition"></a></dt>
+<dd><p>Transcribe a WAV audio file to text using Google’s Web Speech API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>audio_path</strong> (<em>str</em>) – Path to the WAV audio file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transcribed text or error message if transcription fails.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.audio_processing.convert_mp3_to_wav">
+<span class="sig-prename descclassname"><span class="pre">src.audio_processing.</span></span><span class="sig-name descname"><span class="pre">convert_mp3_to_wav</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mp3_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/audio_processing.html#convert_mp3_to_wav"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.audio_processing.convert_mp3_to_wav" title="Link to this definition"></a></dt>
+<dd><p>Convert an MP3 file to WAV format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mp3_path</strong> (<em>str</em>) – Path to the MP3 file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the converted WAV file or an error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</li>
+<li><p><strong>image_handlers</strong> module</p>
+<dl class="py function" id="module-src.image_handlers">
+<dt class="sig sig-object py" id="src.image_handlers.image_handler">
+<span class="sig-prename descclassname"><span class="pre">src.image_handlers.</span></span><span class="sig-name descname"><span class="pre">image_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/image_handlers.html#image_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.image_handlers.image_handler" title="Link to this definition"></a></dt>
+<dd><p>Handle image input, process it for recognition and recommendation, and display the results.</p>
+<p>This function gets an image prompt from the user (either via URL or upload), processes the image,
+and sends it to the recognition and recommendation APIs to retrieve and display results.</p>
+<p>It displays a preview of the image and handles any errors during the recognition and recommendation processes.</p>
+</dd></dl>
+
+</li>
+<li><p><strong>text_handlers</strong> module</p>
+<dl class="py function" id="module-src.text_handlers">
+<dt class="sig sig-object py" id="src.text_handlers.text_handler">
+<span class="sig-prename descclassname"><span class="pre">src.text_handlers.</span></span><span class="sig-name descname"><span class="pre">text_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/text_handlers.html#text_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.text_handlers.text_handler" title="Link to this definition"></a></dt>
+<dd><p>Handles text input for dialogue recognition and recommendation.</p>
+<p>It processes the dialogue entered by the user, sends it to recognition and recommendation
+APIs, and displays the results in a grid format.</p>
+</dd></dl>
+
+</li>
+<li><p><strong>video_handlers</strong> module</p>
+<dl class="py function" id="module-src.video_handlers">
+<dt class="sig sig-object py" id="src.video_handlers.video_handler">
+<span class="sig-prename descclassname"><span class="pre">src.video_handlers.</span></span><span class="sig-name descname"><span class="pre">video_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/video_handlers.html#video_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.video_handlers.video_handler" title="Link to this definition"></a></dt>
+<dd><p>Handle video input, extract frames, and combine them into a grid.</p>
+<p>This function gets a video file from the user, processes it to extract frames,
+and combines those frames into a grid layout. The combined image is then saved to the specified path.</p>
+</dd></dl>
+
+</li>
+<li><p><strong>video_processing</strong> module</p>
+<dl class="py function" id="module-src.video_processing">
+<dt class="sig sig-object py" id="src.video_processing.extract_frames">
+<span class="sig-prename descclassname"><span class="pre">src.video_processing.</span></span><span class="sig-name descname"><span class="pre">extract_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Image</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/video_processing.html#extract_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.video_processing.extract_frames" title="Link to this definition"></a></dt>
+<dd><p>Extract frames from a video file at specified intervals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>video_path</strong> (<em>str</em>) – Path to the video file.</p></li>
+<li><p><strong>interval</strong> (<em>int</em>) – Interval (in seconds) at which frames are extracted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of frames extracted from the video as PIL Images.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[Image.Image]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.video_processing.combine_frames_in_grid">
+<span class="sig-prename descclassname"><span class="pre">src.video_processing.</span></span><span class="sig-name descname"><span class="pre">combine_frames_in_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Image</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/video_processing.html#combine_frames_in_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.video_processing.combine_frames_in_grid" title="Link to this definition"></a></dt>
+<dd><p>Combine frames into a grid and save the combined image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frames</strong> (<em>List</em><em>[</em><em>Image.Image</em><em>]</em>) – List of frames to combine.</p></li>
+<li><p><strong>output_path</strong> (<em>str</em>) – Path where the combined image will be saved.</p></li>
+<li><p><strong>rows</strong> (<em>int</em>) – Number of rows in the grid.</p></li>
+<li><p><strong>cols</strong> (<em>int</em>) – Number of columns in the grid.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the saved combined image, or None if an error occurred.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</li>
+</ul>
+</section>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<p>The <cite>src</cite> package includes the following modules:</p>
+<ul>
+<li><p><strong>src</strong> module</p>
+<span class="target" id="module-src"></span></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="prompts.html" class="btn btn-neutral float-left" title="prompts package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Qadeer Ahmad.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
