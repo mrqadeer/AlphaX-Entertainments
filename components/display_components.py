@@ -72,6 +72,15 @@ def display_recommendation_result(data: List[Dict[str, str]]) -> None:
         
 def display_home_content() -> None:
 
+    """
+    Display the home content of the web app, including the title, description, and options for dialogues, images, audios, and videos.
+
+    The content is displayed in a grid layout with 4 columns. Each column contains a card with a title, description, and an image.
+
+    The user can interact with the cards by hovering over them, which will display a tooltip with the description.
+
+    This function is called when the user navigates to the home page of the web app.
+    """
     st.markdown("""
                 <div class="container">
                     <h2 class="elementor-heading-title elementor-size-default">

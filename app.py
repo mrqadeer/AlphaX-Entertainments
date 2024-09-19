@@ -16,8 +16,6 @@ from src.image_handlers import image_handler
 from src.audio_handlers import audio_handler
 from src.video_handlers import video_handler
 
-if 'credential_flag' not in st.session_state:
-    st.session_state['credential_flag'] = False
 
 # Set the wide layout
 st.set_page_config(
@@ -126,10 +124,17 @@ def main():
 
     # Footer HTML and CSS
     footer = """
-        <div class="footer">
-            <p>© 2024 Qadeer Ahmad. All Rights Reserved. 
-            <a href="https://github.com/mrqadeer" target="_blank">Portfolio</a></p>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <div class="footer">
+        <p>Connect with us on Social Media</p>
+        <div class="social-icons">
+            <a href="https://github.com/mrqadeer" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/qadeer-ahmad-3499a4205/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/mrqadeerofficial?mibextid=ZbWKwL" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.kaggle.com/mrqadeer" target="_blank"><i class="fab fa-kaggle"></i></a>
         </div>
+    </div>
     """
 
     # Add the footer to the app

@@ -1,4 +1,4 @@
-def save_credentials(api_key: str):
+def save_credentials(api_key: str)->bool:
     """
     Save API credentials based on the selected LLM choice.
 
