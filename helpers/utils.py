@@ -34,7 +34,7 @@ def ensure_directories()->None:
     """
     pathlib.Path(IMAGE_SAVE_FOLDER).mkdir(parents=True, exist_ok=True)
     pathlib.Path(VIDEO_SAVE_FOLDER).mkdir(parents=True, exist_ok=True)
-
+    pathlib.Path(AUDIO_SAVE_FOLDER).mkdir(parents=True, exist_ok=True)
 # Function to save an uploaded image
 def save_image(uploaded_image):
     """
@@ -98,10 +98,10 @@ def save_audio(audio_bytes):
 
     Example:
         >>> save_audio(audio_bytes)
-        'data/audio/uploaded_audio.mp3'
+        'data/audio/output.mp3'
     """
     ensure_directories()
-    audio_path = pathlib.Path(AUDIO_SAVE_FOLDER, 'uploaded_audio.mp3')
+    audio_path = pathlib.Path(AUDIO_SAVE_FOLDER, 'output.mp3')
     try:
         with open(audio_path, 'wb') as f:
             f.write(audio_bytes)
