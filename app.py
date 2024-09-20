@@ -103,6 +103,14 @@ def main():
 
     # Footer HTML and CSS
     display_html_content(tag='footer')
-
+    # Hide mainmenu and footer of StreamlitCloud
+    hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+    st.markdown(hide_st_style, unsafe_allow_html=True)
 if __name__ == "__main__":
     main()
