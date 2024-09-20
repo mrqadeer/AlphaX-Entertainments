@@ -2,11 +2,12 @@ import os
 import pathlib
 import streamlit as st
 
-from streamlit_option_menu import option_menu
 from components.input_components import (get_credentials,
-                                         get_choice)
+                                         get_choice,
+                                         get_page_choice)
 
-from components.display_components import display_home_content
+from components.display_components import (display_home_content,
+                                           display_html_content)
 from src.text_handlers import text_handler
 
 
@@ -59,38 +60,15 @@ def main():
     Returns:
         None
     """
-    st.title("AlphaX Entertainments")
-
-    with st.sidebar:
-        selected = option_menu(
-            menu_title='AlphaX Entertainments',
-            
-            options=["Home","Credentials", "Try AlphaX"],
-            icons=["house","key", "robot"],
-            menu_icon="None",
-            default_index=0,
-            styles={
-                "menu-title": {"color": 'yellow', "font-size": "16px"},
-                "container": {"padding": "15!important", "background-color": 'black'},
-                "icon": {"color": "white ", "font-size": "20px"},
-                "nav-link": {"color": "white", "font-size": "20px", 'font-weight': 'bold',
-                             "text-align": "left", "margin": "5px", "padding": "10px",
-                             "--hover-color": "magenta"},
-                "nav-link-selected": {"background-color": "#02ab21"}
-            }
-        )
     st.logo("static/assets/logo/alphax.png")
+    st.title("AlphaX Entertainments")
+    selected=get_page_choice()
     if selected == "Home":
     
         display_home_content()
+        
     elif selected == "Credentials":
-        st.markdown("""
-        <div class="container" style="text-align: center;" id="credentials">
-                <h2 class='api-key'>OpenAI API Key Setup</h2>
-                    <p class='api-key'>To use this app, you need to create an OpenAI API key. Visit the OpenAI website, generate your key, and submit it here.</p>
-                    <p class='api-key'>Click <a href="https://platform.openai.com/account/api-keys" target="_blank">here</a> to create your OpenAI API key.</p>
-        </div>
-                    """,unsafe_allow_html=True)
+        display_html_content(tag='credentials')
         cols = st.columns([4, 3, 2.5])
         with cols[1]:
             submit = st.button("Submit",key="submit")
@@ -100,26 +78,10 @@ def main():
 
     elif selected == "Try AlphaX":
         if not st.session_state['signed_in']:
-            
-            st.markdown(
-                    """
-                    <div class="custom-alert" role="alert">
-                    Please enter your credentials to access AlphaX Entertainments...
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-)
-            
+            display_html_content(tag='alert')    
             st.stop()
-
-        st.markdown(
-    f"""
-    <div class="welcome-text">
-        Dear <span class="username-transition">{st.session_state['username'].title()}</span>, welcome to <span class="username-transition">AlphaX Entertainments</span>!
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+        display_html_content(tag='welcome')
+        
         st.markdown("<div class='rainbow-divider'></div>",
                     unsafe_allow_html=True)
         choice = get_choice()
@@ -140,22 +102,7 @@ def main():
  
 
     # Footer HTML and CSS
-    footer = """
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <div class="footer">
-        <p>Connect with us me Social Media</p>
-        <div class="social-icons">
-            <a href="https://github.com/mrqadeer" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/qadeer-ahmad-3499a4205/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.facebook.com/mrqadeerofficial?mibextid=ZbWKwL" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.kaggle.com/mrqadeer" target="_blank"><i class="fab fa-kaggle"></i></a>
-        </div>
-    </div>
-    """
-
-    # Add the footer to the app
-    st.markdown(footer, unsafe_allow_html=True)
+    display_html_content(tag='footer')
 
 if __name__ == "__main__":
     main()

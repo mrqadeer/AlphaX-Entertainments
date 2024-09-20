@@ -148,22 +148,22 @@ h1 {
 /*  Logo */
 
 /* Styling for the logo in the sidebar */
-.stLogo.st-emotion-cache-1xawmls.eczjsme7 {
+.stLogo {
     display: flex; /* Ensure it's centered within a container */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     border-radius: 10px; /* Smooth rounded corners */
-    transition: transform 0.3s ease  box-shadow 0.3s ease !important; /* Smooth transition for hover effects */
+    transition: transform 0.3s ease  box-shadow 0.3s ease; /* Smooth transition for hover effects */
 }
 
 /* Hover effect for the logo */
-.stLogo.st-emotion-cache-1xawmls.eczjsme7:hover {
-    transform: scale(1.1) !important; /* Slight zoom effect on hover */
+.stLogo:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
     box-shadow: 0px 4px 15px rgba(242, 255, 0, 0.3); /* Subtle shadow effect to make the logo pop */
 }
 
 /* Logo image or SVG adjustments (optional) */
-.stLogo.st-emotion-cache-1xawmls.eczjsme7 img {
+.stLogo img {
     max-width: 100%; /* Ensure the logo scales properly */
     height: auto; /* Maintain aspect ratio */
     border-radius: 5px; /* Optional: rounded corners for the logo image */

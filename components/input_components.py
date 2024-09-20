@@ -3,13 +3,38 @@ import time
 from streamlit_mic_recorder import speech_to_text
 from typing import Tuple, Union, Optional
 from helpers.save_credentials import save_credentials
-
+from streamlit_option_menu import option_menu
 # Initialize session state if not already set
 if 'username' not in st.session_state:
     st.session_state['username'] = 'Qadeer'
 if 'openai_api_key' not in st.session_state:
     st.session_state['openai_api_key'] = None
 
+def get_page_choice()->str:
+    """
+    Renders a sidebar with options: "Home", "Credentials", and "Try AlphaX".
+    Returns the selected option as a string.
+    """
+    with st.sidebar:
+        selected:str = option_menu(
+            menu_title='AlphaX Entertainments',
+            
+            options=["Home","Credentials", "Try AlphaX"],
+            icons=["house","key", "robot"],
+            menu_icon="None",
+            default_index=0,
+            styles={
+                "menu-title": {"color": 'yellow', "font-size": "16px"},
+                "container": {"padding": "15!important", "background-color": 'black'},
+                "icon": {"color": "white ", "font-size": "20px"},
+                "nav-link": {"color": "white", "font-size": "20px", 'font-weight': 'bold',
+                             "text-align": "left", "margin": "5px", "padding": "10px",
+                             "--hover-color": "magenta"},
+                "nav-link-selected": {"background-color": "#02ab21"}
+            }
+        )
+
+    return selected
 @st.dialog("Sign In to get touch in AlphaX Entertainments")
 def get_credentials() -> bool:
     """

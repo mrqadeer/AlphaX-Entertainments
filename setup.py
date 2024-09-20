@@ -18,13 +18,13 @@ def get_requirements(file_path:str)->List[str]:
     
     return requirements
 
-
-setup(
-    name='alphax-entertainments',
-    version='1.1.1',
-    description='This project is about AI Applications using Prompt Engineering',
-    author='Qadeer Ahmad',
-    license='',
-    packages=find_packages(),
-    install_requires=get_requirements('requirements.txt')
-)
+if __name__ == '__main__':
+    setup(
+        name='alphax-entertainments',
+        version='1.1.1',
+        description='This project is about AI Applications using Prompt Engineering',
+        author='Qadeer Ahmad',
+        license='',
+        packages=find_packages(),
+        install_requires=get_requirements('requirements.txt')
+    )

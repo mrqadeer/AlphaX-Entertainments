@@ -137,4 +137,58 @@ def display_home_content() -> None:
                         
                     """, unsafe_allow_html=True)
 
-    
+def display_html_content(tag:str='footer')->None:
+    """
+    Displays HTML content in the app based on the given tag. Possible values for the tag parameter are:
+
+    - 'credentials': Displays a message asking the user to enter their OpenAI API key.
+    - 'footer': Displays social media links at the bottom of the app.
+    - 'alert': Displays a warning message asking the user to enter their credentials.
+    - 'welcome': Displays a welcome message with the username.
+
+    :param tag: The tag to display the HTML content for. Defaults to 'footer'.
+    :type tag: str
+    """
+    if tag == 'credentials':
+        st.markdown("""
+        <div class="container" style="text-align: center;" id="credentials">
+                <h2 class='api-key'>OpenAI API Key Setup</h2>
+                    <p class='api-key'>To use this app, you need to create an OpenAI API key. Visit the OpenAI website, generate your key, and submit it here.</p>
+                    <p class='api-key'>Click <a href="https://platform.openai.com/account/api-keys" target="_blank">here</a> to create your OpenAI API key.</p>
+        </div>
+                    """,unsafe_allow_html=True)
+    elif tag=='footer':
+        footer = """
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <div class="footer">
+            <p>Connect with us me Social Media</p>
+            <div class="social-icons">
+                <a href="https://github.com/mrqadeer" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/qadeer-ahmad-3499a4205/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/mrqadeerofficial?mibextid=ZbWKwL" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.kaggle.com/mrqadeer" target="_blank"><i class="fab fa-kaggle"></i></a>
+            </div>
+        </div>
+        """
+
+        # Add the footer to the app
+        st.markdown(footer, unsafe_allow_html=True)
+    elif tag=='alert':
+        st.markdown(
+                    """
+                    <div class="custom-alert" role="alert">
+                    Please enter your credentials to access AlphaX Entertainments...
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                        )
+    elif tag=='welcome':
+        st.markdown(
+            f"""
+            <div class="welcome-text">
+                Dear <span class="username-transition">{st.session_state['username'].title()}</span>, welcome to <span class="username-transition">AlphaX Entertainments</span>!
+            </div>
+            """,
+            unsafe_allow_html=True
+            )
