@@ -9,6 +9,7 @@ from PIL import Image
 # Constants
 IMAGE_SAVE_FOLDER = 'data/images'
 VIDEO_SAVE_FOLDER = 'data/video'
+AUDIO_SAVE_FOLDER = 'data/audio'
 DEFAULT_IMAGE = pathlib.Path(IMAGE_SAVE_FOLDER, 'default.png')
 
 # Function to ensure directories exist
@@ -83,7 +84,31 @@ def save_video(uploaded_file):
     except Exception as e:
         st.error(f"Error processing video: {str(e)}")
         return None
+def save_audio(audio_bytes):
+    """
+    Save an uploaded audio file to the server.
 
+    This function saves the provided audio file to a predefined folder.
+
+    Args:
+        audio_bytes (UploadedFile): The audio file to be saved.
+
+    Returns:
+        str: The path to the saved audio, or None if an error occurred.
+
+    Example:
+        >>> save_audio(audio_bytes)
+        'data/audio/uploaded_audio.mp3'
+    """
+    ensure_directories()
+    audio_path = pathlib.Path(AUDIO_SAVE_FOLDER, 'uploaded_audio.mp3')
+    try:
+        with open(audio_path, 'wb') as f:
+            f.write(audio_bytes)
+        return str(audio_path)
+    except Exception as e:
+        st.error(f"Error processing audio: {str(e)}")
+        return None
 # Function to download an image from a URL
 def download_image(url):
     """

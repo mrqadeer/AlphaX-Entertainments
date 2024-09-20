@@ -1,8 +1,9 @@
 import streamlit as st
 import time
-from streamlit_mic_recorder import speech_to_text
+from streamlit_mic_recorder import mic_recorder
 from typing import Tuple, Union, Optional
 from helpers.save_credentials import save_credentials
+
 from streamlit_option_menu import option_menu
 # Initialize session state if not already set
 if 'username' not in st.session_state:
@@ -137,26 +138,19 @@ def get_audio_prompt() -> Tuple[Union[str, None], str]:
         
         if choice == "Record":
             with st.progress(0, text="Recording..."):
-                recorded_text = speech_to_text(
-                    language='en',
+                recording = mic_recorder(
                     start_prompt="🎙️ Start Recording",
                     stop_prompt="🛑 Stop Recording",
                     just_once=False,
                     use_container_width=False
                 )
-            
-            if recorded_text:
-                progress_text = "Getting your dialogue. Please wait."
-                my_bar = st.progress(0, text=progress_text)
+            if recording:
+                audio_bytes = recording['bytes']
                 
-                for percent_complete in range(1, 101):
-                    time.sleep(0.03)  # Simulate processing time
-                    my_bar.progress(percent_complete, text=progress_text)
-                
-                st.text_area("Recorded Text", recorded_text)
-                return recorded_text, 'recording'
+                return (audio_bytes, 'recording') if audio_bytes else ('' 'error')
             else:
-                return '', 'error'
+                st.warning("No audio was recorded.")
+                st.stop()
         else:
             uploaded_audio = st.file_uploader("Upload an audio", type=["mp3", "wav"])
             return (uploaded_audio, 'upload') if uploaded_audio else ('', 'error')

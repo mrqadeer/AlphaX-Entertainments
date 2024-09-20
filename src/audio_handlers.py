@@ -1,13 +1,12 @@
 # src/audio_handlers.py
 import ast
 import streamlit as st
-from typing import Optional, Tuple
+from typing import Optional
 
+from helpers.utils import save_audio
 from components.input_components import get_audio_prompt
-from src.audio_processing import audio_processing, transcribe_audio_to_text
-from src.api_handlers import get_recognition_response, get_recommendation_response
 from components.display_components import display_recognition_result, display_recommendation_result
-
+from src.api_handlers import get_recognition_response, get_recommendation_response,get_recognized_text
 
 def audio_handler() -> Optional[None]:
     """
@@ -20,7 +19,8 @@ def audio_handler() -> Optional[None]:
         prompt_audio, tag = get_audio_prompt()
 
         if not prompt_audio:
-            raise ValueError("No audio input provided.")
+            st.warning("No audio input provided.")
+            st.stop()
         cols=st.columns([5, 6, 2.5], gap="medium")
         with cols[1]:
             # Render the submit button
@@ -28,32 +28,32 @@ def audio_handler() -> Optional[None]:
 
         # Only proceed if the submit button is clicked and valid audio input is available
         if submit:
+            with st.expander("Preview Audio"):
+                st.audio(prompt_audio, format="audio/wav", start_time=0)
             audio_text: str = ""
 
             try:
                 # Handle audio based on input type (recording or upload)
                 if tag == 'recording':
                     # If audio is from recording, assume it's already in text form
+                    audio_path=save_audio(prompt_audio)
                     audio_text = prompt_audio
 
                 elif tag == 'upload':
-                    # If audio is uploaded, show a preview and process the file
-                    with st.expander("Preview Audio"):
-                        st.audio(prompt_audio, format="audio/wav", start_time=0)
+                    audio_bytes=prompt_audio.read()
+                    audio_path=save_audio(audio_bytes)
+                    
+                    
+                with st.spinner("Processing audio..."):
+                    
 
-                    with st.spinner("Processing audio..."):
-                        # Process uploaded audio
-                        audio_path: Optional[str] = audio_processing(prompt_audio)
-                        if not audio_path:
-                            raise ValueError("Error processing the audio file.")
-
-                        # Transcribe audio to text
-                        audio_text = transcribe_audio_to_text(audio_path)
-                        if not audio_text:
-                            raise ValueError("Transcription failed.")
-                        
-                        # Display transcribed text
-                        st.text_area("Transcribed Text", audio_text, disabled=True)
+                    # Transcribe audio to text
+                    audio_text = get_recognized_text(audio_path)
+                    if not audio_text:
+                        raise ValueError("Transcription failed.")
+                    
+                    # Display transcribed text
+                    st.text_area("Transcribed Text", audio_text, disabled=False)
 
             except ValueError as ve:
                 st.error(f"Value Error: {ve}")

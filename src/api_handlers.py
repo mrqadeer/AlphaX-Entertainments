@@ -1,8 +1,8 @@
-import os
+# src/api_handlers.py
 import ast
 
 import streamlit as st
-from typing import Optional, Union, Tuple, List
+from typing import Optional, Tuple, List
 from langchain_openai.chat_models import ChatOpenAI
 
 from langchain_core.messages import HumanMessage
@@ -240,3 +240,65 @@ def get_recommendation_response(input_data: str) -> Optional[dict]:
     except Exception as e:
         st.error(f"Error: {e}")
         return None
+
+
+
+import openai
+class TranscriptionError(Exception):
+    """Custom exception for transcription errors."""
+    pass
+
+class TranscriptionLLMHandler:
+    def __init__(self, model: str = "whisper-1", timeout: int = 60, max_retries: int = 3, response_format: str = "text"):
+        if not st.session_state['openai_api_key']:
+            raise ValueError("API key must be provided.")
+        
+        self.api_key = st.session_state['openai_api_key']
+        self.model = model
+        self.timeout = timeout
+        self.max_retries = max_retries
+        self.response_format = response_format
+
+        # Initialize OpenAI API key
+        openai.api_key = self.api_key
+        self.llm_instance: openai.Client = self.get_llm_instance()
+    def get_llm_instance(self):
+        return openai.Client(
+            api_key=self.api_key,
+            timeout=self.timeout,
+            max_retries=self.max_retries,
+            
+        )
+    def transcribe_audio(self, audio_file_path: str) -> str:
+        """Transcribes the given audio file."""
+        try:
+            with open(audio_file_path, "rb") as audio_file:
+                transcription = self.llm_instance.audio.transcriptions.create(
+                    model=self.model,
+                    file=audio_file,
+                    timeout=self.timeout,
+                    response_format=self.response_format
+                )
+            return transcription
+        
+        except FileNotFoundError:
+            raise TranscriptionError(f"File not found: {audio_file_path}")
+        
+        except openai.OpenAIError as e:
+            # Handle specific OpenAI API errors here
+            raise TranscriptionError(f"OpenAI API error occurred: {str(e)}")
+        
+        except Exception as e:
+            # Catch any other unforeseen errors
+            raise TranscriptionError(f"An error occurred: {str(e)}")
+
+    def handle_response(self, audio_path: str) -> str:
+        """Handles the transcription process and returns the result."""
+        if not self.llm_instance:
+            raise ValueError("LLM instance is not created.")
+        return self.transcribe_audio(audio_path)
+    
+    
+def get_recognized_text(audio_path: str) -> str:
+    handler = TranscriptionLLMHandler()
+    return handler.handle_response(audio_path)
