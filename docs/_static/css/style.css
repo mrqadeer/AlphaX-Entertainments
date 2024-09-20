@@ -1,0 +1,397 @@
+/* static/style.css */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #2b2d3b; /* Matches config.toml background */
+}
+
+.sidebar .sidebar-content {
+    background-color: #333333 !important;  /* Darker background for sidebar */
+    color: #FFFFFF !important;  /* White text in sidebar */
+}
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+    color: #4CAF50;  /* Matching primary color */
+}
+
+.sidebar .nav-link:hover {
+    background-color: #4CAF50 !important;  /* Highlight on hover */
+    color: #FFFFFF !important;  /* White text on hover */
+}
+
+.nav-link-active {
+    background-color: #4CAF50 !important;  /* Active link */
+    color: #FFFFFF !important;
+}
+
+.icon {
+    color: #FFFFFF !important;  /* White icons */
+}
+
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffe814;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.choice{
+    color: #ffe814;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.poster {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    border-radius: 15px;
+}
+.details {
+    font-size: 20px;
+    color: #1fed04;
+    margin: 15px 0;
+}
+.details span {
+    font-weight: bold;
+    color: #e17202;
+}
+.imdb-link {
+    color: #F5C518;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+/* for recommendations */
+
+.recommendations-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffe814;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.recommendation-item {
+    text-align: center;
+    margin-top: 15px;
+}
+.recommendation-item img {
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+}
+.recommendation-caption {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4bf900;
+    margin-top: 10px;
+}
+
+
+.recommendation-item a {
+    text-decoration: none;
+    color: #05ef63;
+}
+.recommendation-item a:hover {
+    color: #f1ee08;  /* Color on hover */
+}
+
+.rainbow-divider {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    border: none;
+    margin: 20px 0;
+}
+
+
+/* welcome user */
+.welcome-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.username-transition {
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 200% 200%;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: gradient-animation 3s ease-in-out , slide-right 1.5s forwards;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes slide-right {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/*  Logo */
+
+/* Styling for the logo in the sidebar */
+.stLogo {
+    display: flex; /* Ensure it's centered within a container */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    border-radius: 10px; /* Smooth rounded corners */
+    transition: transform 0.3s ease  box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for the logo */
+.stLogo:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+    box-shadow: 0px 4px 15px rgba(242, 255, 0, 0.3); /* Subtle shadow effect to make the logo pop */
+}
+
+/* Logo image or SVG adjustments (optional) */
+.stLogo img {
+    max-width: 100%; /* Ensure the logo scales properly */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 5px; /* Optional: rounded corners for the logo image */
+}
+
+
+/* General styling */
+.feature-area {
+    padding: 50px 0;
+    background-color: #f5f5f5;
+}
+/* Home page cards */
+.single-feature {
+    background-color: #fff; /* Light background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #333; /* Dark text */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+    border: 2px solid transparent; /* Default transparent border */
+    width: 100%; /* Allow the grid to control the width */
+    height: 200px; /* Fixed height */
+    overflow: hidden; /* Prevent content from spilling */
+    box-sizing: border-box;
+    display: block; /* Prevent flexbox for spacing */
+}
+
+/* Title and Image */
+
+.single-feature h4 {
+    margin: -18px 0px;
+    font-size: 26px;
+    display: flow-root;
+    color: #000000;
+}
+/* Icon styling */
+.single-feature .title figure svg {
+    width: 30px;
+    height: 30px;
+    margin-right: 2px;
+    margin: -14px;
+    float: left; /* Keep the image and title on the same line */
+    fill: blueviolet;
+}
+
+/* Card text */
+.single-feature p {
+    color: #666;
+    font-size: 14px;
+    margin-top: 15px; /* Adjust margin for spacing below title */
+    line-height: 1.6; /* Better line height for readability */
+    text-align: left; /* Ensure text aligns to the left */
+}
+
+/* Hover effect with a glowing border */
+.single-feature:hover {
+    transform: scale(1.05); /* Zoom-in effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    border: 2px solid yellow; /* Glowing border */
+}
+
+.container {
+    padding-left: 30px; /* Add some padding to the left */
+    padding-right: 30px; /* Add some padding to the right */
+}
+
+/* Heading (h2) styling */
+h2 {
+    font-size: 26px; /* Adjust font size */
+    text-align: center; /* Center the heading */
+    white-space: nowrap; 
+    overflow: hidden; 
+    font:'Poppins';
+    margin-bottom: 20px; /* Spacing between heading and content */
+    text-wrap:wrap;
+}
+
+h1 {
+    font-size: 28px; /* Adjust font size */
+    text-align: left; /* Center the heading */
+    white-space: nowrap; 
+    overflow: hidden; 
+    font:'Poppins';
+    margin-bottom: 10px; /* Spacing between heading and content */
+    color: yellow;
+}
+
+
+.st-emotion-cache-ubko3j.e1nzilvr4{
+    visibility: hidden;
+}
+
+.stAppViewMain.main.st-emotion-cache-bm2z3a.ea3mdgi8 {
+    background-color: #0E1117;
+}
+.st-emotion-cache-12fmjuu.ezrtsby2 {
+    background-color: #0E1117;
+}
+
+#credentials {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    background-color: #29292d;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
+
+}
+
+/* Heading Style */
+.api-key {
+    font-family: 'Arial', sans-serif;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2.api-key {
+    font-size: 28px;
+    font-weight: 600;
+    color: #dad603;
+}
+
+/* Paragraph Style */
+p.api-key {
+    font-size: 16px;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+/* Button Style */
+.submit-btn {
+    background-color: #1e90ff;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Anchor tag (link) style */
+a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Button - Default state */
+.st-emotion-cache-15hul6a.ef3psqc13 {
+    color: green;
+    border-color: yellow;
+    transition: all 0.3s ease-in-out;
+    width: 50%;
+    margin-top: 10px;
+}
+
+/* Button - Hover effect */
+.st-emotion-cache-15hul6a.ef3psqc13:hover:enabled {
+    color: blueviolet;
+    transform: scale(1.05); /* "scale" instead of "scale" property to make it work properly */
+    border-color: yellow;
+    transition: all 0.3s ease-in-out;
+    width: 50%;
+}
+
+/* Disabled button - No hover effect */
+.st-emotion-cache-15hul6a.ef3psqc12:disabled {
+    color: grey;
+    border-color: grey;
+    cursor: not-allowed; /* Visual cue for disabled state */
+    pointer-events: none; /* Disable hover */
+}
+
+
+.custom-alert {
+    color: white;
+    background-color: rgb(70, 14, 14);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #2B2D3B;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+    font-size: 24px;
+}
+
+.footer a:hover {
+    color: #ffdd57;
+}
+
+.social-icons {
+    margin-top: 2px;
+}
+
+/* Icons with a bit of spacing */
+.social-icons i {
+    margin-right: 15px;
+}
+
+.st-emotion-cache-6qob1r.eczjsme11{
+    background-color: #2B2D3B;
+}

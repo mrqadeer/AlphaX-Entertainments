@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>components.display_components &mdash; AlphaX Entertainments 1.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=58fbf978"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            AlphaX Entertainments
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">AlphaX-Entertainments</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AlphaX Entertainments</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">components.display_components</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for components.display_components</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">from</span> <span class="nn">helpers.utils</span> <span class="kn">import</span> <span class="n">get_image_url</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+
+<div class="viewcode-block" id="display_recognition_result">
+<a class="viewcode-back" href="../../components.html#components.display_components.display_recognition_result">[docs]</a>
+<span class="k">def</span> <span class="nf">display_recognition_result</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display the recognition result including title, poster, and details.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (Dict[str, Union[str, List[str]]]): A dictionary containing movie details like title, genre, cast, etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="s2">&quot;Recognition:&quot;</span><span class="p">):</span>
+        <span class="c1"># Display Title</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;div class=&#39;title&#39;&gt;</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Unknown Title&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Display Poster</span>
+        <span class="n">poster_url</span> <span class="o">=</span> <span class="n">get_image_url</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;imdb_url&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;img src=&#39;</span><span class="si">{</span><span class="n">poster_url</span><span class="si">}</span><span class="s2">&#39; class=&#39;poster&#39;&gt;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Display Details</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            &lt;div class=&#39;details&#39;&gt;&lt;span&gt;Genre:&lt;/span&gt; </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;genre&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">            &lt;div class=&#39;details&#39;&gt;&lt;span&gt;Cast:&lt;/span&gt; </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cast&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[]))</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">            &lt;div class=&#39;details&#39;&gt;&lt;span&gt;Director:&lt;/span&gt; </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;director&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[]))</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">            &lt;div class=&#39;details&#39;&gt;&lt;span&gt;Release Date:&lt;/span&gt; </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;releaseDate&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">            &lt;div class=&#39;details&#39;&gt;&lt;span&gt;Runtime:&lt;/span&gt; </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;run_time&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">            &lt;div class=&#39;details&#39;&gt;&lt;span&gt;IMDb Rating:&lt;/span&gt; </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;imdb&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">            &lt;div class=&#39;details&#39;&gt;&lt;span&gt;Votes:&lt;/span&gt; </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;num_votes&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># IMDb link</span>
+        <span class="n">imdb_url</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;imdb_url&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;a href=&#39;</span><span class="si">{</span><span class="n">imdb_url</span><span class="si">}</span><span class="s2">&#39; class=&#39;imdb-link&#39;&gt;View on IMDb&lt;/a&gt;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s2">&quot;&lt;div class=&#39;rainbow-divider&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="display_recommendation_result">
+<a class="viewcode-back" href="../../components.html#components.display_components.display_recommendation_result">[docs]</a>
+<span class="k">def</span> <span class="nf">display_recommendation_result</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display a list of recommended movies with their titles and posters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (List[Dict[str, str]]): A list of dictionaries containing movie recommendations with title and IMDb URL.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="s2">&quot;Recommendations:&quot;</span><span class="p">):</span>
+        <span class="c1"># Display Recommendations</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s2">&quot;&lt;div class=&#39;recommendations-title&#39;&gt;Recommendations:&lt;/div&gt;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">rec</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">cols</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="mi">5</span><span class="p">]:</span>
+                <span class="n">title</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;Unknown Title&#39;</span><span class="p">)</span>
+                <span class="n">imdb_url</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;imdb_url&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">image</span> <span class="o">=</span> <span class="n">get_image_url</span><span class="p">(</span><span class="n">imdb_url</span><span class="p">)</span>
+                    <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                        &lt;div class=&#39;recommendation-item&#39;&gt;</span>
+<span class="s2">                            &lt;img src=&quot;</span><span class="si">{</span><span class="n">image</span><span class="si">}</span><span class="s2">&quot; alt=&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;&gt;</span>
+<span class="s2">                            &lt;a href=&quot;</span><span class="si">{</span><span class="n">imdb_url</span><span class="si">}</span><span class="s2">&quot; target=&quot;_blank&quot;&gt;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&lt;/a&gt;</span>
+<span class="s2">                        &lt;/div&gt;</span>
+<span class="s2">                    &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="c1"># Handle image fetching errors</span>
+                    <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                        &lt;div class=&#39;recommendation-item&#39;&gt;</span>
+<span class="s2">                            &lt;img src=&quot;data/images/default.png&quot; alt=&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;&gt;</span>
+<span class="s2">                            </span><span class="si">{</span><span class="n">title</span><span class="si">}</span>
+<span class="s2">                        &lt;/div&gt;</span>
+<span class="s2">                    &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s2">&quot;&lt;div class=&#39;rainbow-divider&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+        
+        
+<div class="viewcode-block" id="display_home_content">
+<a class="viewcode-back" href="../../components.html#components.display_components.display_home_content">[docs]</a>
+<span class="k">def</span> <span class="nf">display_home_content</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display the home content of the web app, including the title, description, and options for dialogues, images, audios, and videos.</span>
+
+<span class="sd">    The content is displayed in a grid layout with 4 columns. Each column contains a card with a title, description, and an image.</span>
+
+<span class="sd">    The user can interact with the cards by hovering over them, which will display a tooltip with the description.</span>
+
+<span class="sd">    This function is called when the user navigates to the home page of the web app.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                &lt;div class=&quot;container&quot;&gt;</span>
+<span class="s2">                    &lt;h2 class=&quot;elementor-heading-title elementor-size-default&quot;&gt;</span>
+<span class="s2">                       AlphaX: Instant recognition and personalized recommendations for your entertainment.</span>
+<span class="s2">                    &lt;/h2&gt;</span>
+<span class="s2">                &lt;/div&gt;</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">,</span><span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cols</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">gap</span><span class="o">=</span><span class="s1">&#39;small&#39;</span><span class="p">,</span><span class="n">vertical_alignment</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+    <span class="c1"># with cols[0]:</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Dialogues&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;src&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 512 512&quot;&gt;&lt;!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--&gt;&lt;path d=&quot;M256 448c141.4 0 256-93.1 256-208S397.4 32 256 32S0 125.1 0 240c0 45.1 17.7 86.8 47.7 120.9c-1.9 24.5-11.4 46.3-21.4 62.9c-5.5 9.2-11.1 16.6-15.2 21.6c-2.1 2.5-3.7 4.4-4.9 5.7c-.6 .6-1 1.1-1.3 1.4l-.3 .3c0 0 0 0 0 0c0 0 0 0 0 0s0 0 0 0s0 0 0 0c-4.6 4.6-5.9 11.4-3.4 17.4c2.5 6 8.3 9.9 14.8 9.9c28.7 0 57.6-8.9 81.6-19.3c22.9-10 42.4-21.9 54.3-30.6c31.8 11.5 67 17.9 104.1 17.9zM128 208a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm128 0a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm96 32a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z&quot;/&gt;&lt;/svg&gt;&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;Enter a dialogue from a movie, series, or drama, and our AI will instantly recognize the media and suggest related recommendations.&quot;&quot;&quot;</span>
+        <span class="p">},</span>
+    <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Images&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;src&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 512 512&quot;&gt;&lt;!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--&gt;&lt;path d=&quot;M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6l96 0 32 0 208 0c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z&quot;/&gt;&lt;/svg&gt;&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;Upload a scene image, and our AI will analyze the visuals to identify the movie or series, offering recommendations of similar titles you’ll enjoy.&quot;&quot;&quot;</span>
+        
+    <span class="p">},</span>
+        <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Audios&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;src&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 384 512&quot;&gt;&lt;!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--&gt;&lt;path d=&quot;M96 96l0 160c0 53 43 96 96 96s96-43 96-96l-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-32-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-32-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0c0-53-43-96-96-96S96 43 96 96zM320 240l0 16c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 24z&quot;/&gt;&lt;/svg&gt;&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;Record or upload an audio clip of a dialogue, and let our AI match it to the correct media, while also recommending related films and shows.&quot;&quot;&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Videos&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;src&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 576 512&quot;&gt;&lt;!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--&gt;&lt;path d=&quot;M0 128C0 92.7 28.7 64 64 64l256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2l0 256c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1l0-17.1 0-128 0-17.1 14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z&quot;/&gt;&lt;/svg&gt;&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;Submit a short video clip, and our AI will process both the visuals and audio to recognize the media, providing suggestions of similar content.&quot;&quot;&quot;</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+
+    
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        
+        <span class="k">with</span> <span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="mi">4</span><span class="p">]:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                        </span>
+<span class="s2">                        &lt;div class=&quot;row&quot;&gt;</span>
+<span class="s2">                        &lt;div class=&quot;col-lg-4 col-md-6&quot;&gt;</span>
+<span class="s2">                            &lt;div class=&quot;single-feature mb-30&quot;&gt;</span>
+<span class="s2">                                &lt;div class=&quot;title d-flex flex-row pb-20&quot;&gt;</span>
+<span class="s2">                                    &lt;figure class=&quot;elementor-image-box-img&quot;&gt;</span>
+<span class="s2">                                        </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;src&#39;</span><span class="p">]</span><span class="si">}</span>
+<span class="s2">                                    &lt;/figure&gt;</span>
+<span class="s2">                                    &lt;h4&gt;</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/h4&gt;</span>
+<span class="s2">                                &lt;/div&gt;</span>
+<span class="s2">                                &lt;p&gt;</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/p&gt;</span>
+<span class="s2">                                &lt;/div&gt;</span>
+<span class="s2">                            &lt;/div&gt;</span>
+<span class="s2">                        &lt;/div&gt;</span>
+<span class="s2">                        &lt;/div&gt;</span>
+<span class="s2">                        </span>
+<span class="s2">                    &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="display_html_content">
+<a class="viewcode-back" href="../../components.html#components.display_components.display_html_content">[docs]</a>
+<span class="k">def</span> <span class="nf">display_html_content</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;footer&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays HTML content in the app based on the given tag. Possible values for the tag parameter are:</span>
+
+<span class="sd">    - &#39;credentials&#39;: Displays a message asking the user to enter their OpenAI API key.</span>
+<span class="sd">    - &#39;footer&#39;: Displays social media links at the bottom of the app.</span>
+<span class="sd">    - &#39;alert&#39;: Displays a warning message asking the user to enter their credentials.</span>
+<span class="sd">    - &#39;welcome&#39;: Displays a welcome message with the username.</span>
+
+<span class="sd">    :param tag: The tag to display the HTML content for. Defaults to &#39;footer&#39;.</span>
+<span class="sd">    :type tag: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;credentials&#39;</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        &lt;div class=&quot;container&quot; style=&quot;text-align: center;&quot; id=&quot;credentials&quot;&gt;</span>
+<span class="s2">                &lt;h2 class=&#39;api-key&#39;&gt;OpenAI API Key Setup&lt;/h2&gt;</span>
+<span class="s2">                    &lt;p class=&#39;api-key&#39;&gt;To use this app, you need to create an OpenAI API key. Visit the OpenAI website, generate your key, and submit it here.&lt;/p&gt;</span>
+<span class="s2">                    &lt;p class=&#39;api-key&#39;&gt;Click &lt;a href=&quot;https://platform.openai.com/account/api-keys&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt; to create your OpenAI API key.&lt;/p&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">                    &quot;&quot;&quot;</span><span class="p">,</span><span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tag</span><span class="o">==</span><span class="s1">&#39;footer&#39;</span><span class="p">:</span>
+        <span class="n">footer</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css&quot;&gt;</span>
+
+<span class="s2">        &lt;div class=&quot;footer&quot;&gt;</span>
+<span class="s2">            &lt;p&gt;Connect with me Social Media&lt;/p&gt;</span>
+<span class="s2">            &lt;div class=&quot;social-icons&quot;&gt;</span>
+<span class="s2">                &lt;a href=&quot;https://github.com/mrqadeer&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fab fa-github&quot;&gt;&lt;/i&gt;&lt;/a&gt;</span>
+<span class="s2">                &lt;a href=&quot;https://www.linkedin.com/in/qadeer-ahmad-3499a4205/&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fab fa-linkedin&quot;&gt;&lt;/i&gt;&lt;/a&gt;</span>
+<span class="s2">                &lt;a href=&quot;https://www.facebook.com/mrqadeerofficial?mibextid=ZbWKwL&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fab fa-facebook&quot;&gt;&lt;/i&gt;&lt;/a&gt;</span>
+<span class="s2">                &lt;a href=&quot;https://www.kaggle.com/mrqadeer&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fab fa-kaggle&quot;&gt;&lt;/i&gt;&lt;/a&gt;</span>
+<span class="s2">            &lt;/div&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Add the footer to the app</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="n">footer</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tag</span><span class="o">==</span><span class="s1">&#39;alert&#39;</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span>
+<span class="w">                    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                    &lt;div class=&quot;custom-alert&quot; role=&quot;alert&quot;&gt;</span>
+<span class="sd">                    Please enter your credentials to access AlphaX Entertainments...</span>
+<span class="sd">                    &lt;/div&gt;</span>
+<span class="sd">                    &quot;&quot;&quot;</span><span class="p">,</span>
+                    <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span>
+                        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tag</span><span class="o">==</span><span class="s1">&#39;welcome&#39;</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            &lt;div class=&quot;welcome-text&quot;&gt;</span>
+<span class="s2">                Dear &lt;span class=&quot;username-transition&quot;&gt;</span><span class="si">{</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2">&lt;/span&gt;, welcome to &lt;span class=&quot;username-transition&quot;&gt;AlphaX Entertainments&lt;/span&gt;!</span>
+<span class="s2">            &lt;/div&gt;</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Qadeer Ahmad.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
