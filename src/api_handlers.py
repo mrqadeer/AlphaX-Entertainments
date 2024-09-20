@@ -250,6 +250,16 @@ class TranscriptionError(Exception):
 
 class TranscriptionLLMHandler:
     def __init__(self, model: str = "whisper-1", timeout: int = 60, max_retries: int = 3, response_format: str = "text"):
+        """
+        Initialize a TranscriptionLLMHandler instance with the given model, timeout, max_retries, response_format, and api_key.
+        
+        Args:
+            model (str): The name of the model to use. Defaults to "whisper-1".
+            timeout (int): The timeout in seconds for the API call. Defaults to 60.
+            max_retries (int): The maximum number of retries to make if the API call fails. Defaults to 3.
+            response_format (str): The format of the response. Defaults to "text".
+        """
+    
         if not st.session_state['openai_api_key']:
             raise ValueError("API key must be provided.")
         
@@ -263,6 +273,12 @@ class TranscriptionLLMHandler:
         openai.api_key = self.api_key
         self.llm_instance: openai.Client = self.get_llm_instance()
     def get_llm_instance(self):
+        """
+        Create an instance of the OpenAI client with the provided parameters.
+
+        Returns:
+            openai.Client: The created OpenAI client instance.
+        """
         return openai.Client(
             api_key=self.api_key,
             timeout=self.timeout,
@@ -270,7 +286,19 @@ class TranscriptionLLMHandler:
             
         )
     def transcribe_audio(self, audio_file_path: str) -> str:
-        """Transcribes the given audio file."""
+        
+        """
+        Transcribe an audio file using the given model and return the transcription as text.
+        
+        Args:
+            audio_file_path (str): The path to the audio file to transcribe.
+        
+        Returns:
+            str: The transcription of the audio file as text.
+        
+        Raises:
+            TranscriptionError: If there is an error transcribing the audio file.
+        """
         try:
             with open(audio_file_path, "rb") as audio_file:
                 transcription = self.llm_instance.audio.transcriptions.create(
@@ -293,12 +321,39 @@ class TranscriptionLLMHandler:
             raise TranscriptionError(f"An error occurred: {str(e)}")
 
     def handle_response(self, audio_path: str) -> str:
-        """Handles the transcription process and returns the result."""
+        
+        """
+        Handle the response from the transcription model, including any errors that may occur.
+        
+        Args:
+            audio_path (str): The path to the audio file to transcribe.
+        
+        Returns:
+            str: The transcription of the audio file as text.
+        
+        Raises:
+            ValueError: If the LLM instance is not created.
+            TranscriptionError: If there is an error transcribing the audio file.
+        """
         if not self.llm_instance:
             raise ValueError("LLM instance is not created.")
         return self.transcribe_audio(audio_path)
     
     
 def get_recognized_text(audio_path: str) -> str:
+    """
+    Get the recognized text for a given audio file using the default model and parameters.
+
+    Args:
+        audio_path (str): The path to the audio file to transcribe.
+
+    Returns:
+        str: The transcription of the audio file as text.
+
+    Raises:
+        ValueError: If the LLM instance is not created.
+        TranscriptionError: If there is an error transcribing the audio file.
+    """
+
     handler = TranscriptionLLMHandler()
     return handler.handle_response(audio_path)
