@@ -162,7 +162,7 @@ def display_html_content(tag:str='footer')->None:
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <div class="footer">
-            <p>Connect with me Social Media</p>
+            <p>Connect with me on Social Media</p>
             <div class="social-icons">
                 <a href="https://github.com/mrqadeer" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://www.linkedin.com/in/qadeer-ahmad-3499a4205/" target="_blank"><i class="fab fa-linkedin"></i></a>
